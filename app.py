@@ -59,5 +59,33 @@ def add_duty():
 
     return duty_schema.jsonify(add_new_duty)
 
+@app.route("/api.duties/<id>", methods=["PUT"])
+def update_duty(id):
+    update_a_duty = Duty.query.get(id)
+
+    name = request.json["name"]
+    lastname = request.json["lastname"]
+    duty_date = request.json["duty_date"]
+    # Convert str date to Python date object
+    duty_date = datetime.strptime(duty_date, "%Y-%m-%d")
+    duty_type = request.json["duty_type"]
+
+    update_a_duty.name = name
+    update_a_duty.lastname = lastname
+    update_a_duty.duty_date = duty_date
+    update_a_duty.duty_type = duty_type
+
+    db.session.commit()
+
+    return duty_schema.jsonify(update_a_duty)
+
+@app.route("/api.duties/<id>", methods=["DELETE"])
+def delete_duty(id):
+    delete_a_duty = Duty.query.get(id)
+    db.session.delete(delete_a_duty)
+    db.session.commit()
+
+    return duty_schema.jsonify(delete_a_duty)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
