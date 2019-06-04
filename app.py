@@ -99,5 +99,20 @@ def duties():
         duties_list = duties_list.json()
     return render_template("duties.html", duties_list=duties_list)
 
+@app.route("/add_duty", methods=["GET", "POST"])
+def add_duty_form():
+    if request.method == "POST":
+        name = request.form["name"]
+        lastname = request.form["lastname"]
+        duty_date = request.form["duty_date"]
+        duty_type= request.form["duty_type"]
+
+        #duty_date = string_to_datetime(duty_date)
+
+        data = {"name": name, "lastname": lastname, "duty_date": duty_date,
+                "duty_type": duty_type}
+        add_duty = requests.post(api_url, data = json.dumps(data), headers = headers)
+    return render_template("addDuty.html")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
