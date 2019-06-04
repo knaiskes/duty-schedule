@@ -16,6 +16,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 marshmallow = Marshmallow(app)
 
+headers = {"Content-type": "application/json", "Accept": "text/plain"}
+api_url = "http://localhost:5000/api.duties"
+
 class Duty(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
@@ -36,6 +39,10 @@ class DutySchema(marshmallow.Schema):
 duty_schema = DutySchema(strict = True)
 duties_schema = DutySchema(many = True, strict = True)
 
+def string_to_datetime(str_input):
+    str_input = datetime.strptime(str_input, "%Y-%m-%d")
+    return str_input
+
 # API
 
 @app.route("/api.duties", methods=["GET"])
@@ -49,8 +56,7 @@ def add_duty():
     name = request.json["name"]
     lastname = request.json["lastname"]
     duty_date = request.json["duty_date"]
-    # Convert str date to Python date object
-    duty_date = datetime.strptime(duty_date, "%Y-%m-%d")
+    duty_date = string_to_datetime(duty_date)
     duty_type = request.json["duty_type"]
 
     add_new_duty = Duty(name, lastname, duty_date, duty_type)
@@ -66,8 +72,7 @@ def update_duty(id):
     name = request.json["name"]
     lastname = request.json["lastname"]
     duty_date = request.json["duty_date"]
-    # Convert str date to Python date object
-    duty_date = datetime.strptime(duty_date, "%Y-%m-%d")
+    duty_date = string_to_datetime(duty_date)
     duty_type = request.json["duty_type"]
 
     update_a_duty.name = name
@@ -86,6 +91,13 @@ def delete_duty(id):
     db.session.commit()
 
     return duty_schema.jsonify(delete_a_duty)
+
+@app.route("/duties", methods=["GET"])
+def duties():
+    if request.method == "GET":
+        duties_list = requests.get(api_url)
+        duties_list = duties_list.json()
+    return render_template("duties.html", duties_list=duties_list)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
