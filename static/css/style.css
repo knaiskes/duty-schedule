@@ -1,0 +1,13 @@
+#duty-table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#duty-table td, th {
+    border: 2px solid #dddddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 18px;
+}
+
+#duty-table tr:nth-child(even) { background-color: #dddddd; }
