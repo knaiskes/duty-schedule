@@ -1,44 +1,38 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-        <title>Προσθήκη νέας υπηρεσίας</title>
-        {% include  "header.html" %}
-    </head>
-    <body>
-        <form method="POST">
-            <p>
-            <h4>Όνομα</h4>
-            <input type="text" placeholder="Όνομα"
-                               name="name"
-                               value="{{request.form.name}}"
-                               required>
-            </p>
-            <p>
-            <h4>Επώνυμο</h4>
-            <input type="text" placeholder="Επώνυμο"
-                               name="lastname"
-                               value="{{request.form.lastname}}"
-                               required>
-            </p>
-            <p>
-            <h4>Ημερομηνία</h4>
-            <input type="date" name="duty_date"
-                               value="{{request.form.duty_date}}"
-                               required>
-            </p>
-            <p>
-            <select name="duty_type">
-                <option value="ΚΕΗΠ">ΚΕΗΠ</option>
-                <option value="Σκοπιά">Σκοπία</option>
-                <option value="Περίπολος">Περίπολος</option>
-                <option value="Πύλη">Πύλη</option>
-            </select>
-            </p>
-            <p>
-            <button class="button" value="submit"> Submit </button>
-            </p>
-        </form>
-    </body>
-</html>
+<title>Προσθήκη νέας υπηρεσίας</title>
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST">
+    <p>
+    <h4>Όνομα</h4>
+    <input type="text" placeholder="Όνομα"
+                       name="name"
+                       value="{{request.form.name}}"
+                       required>
+    </p>
+    <p>
+    <h4>Επώνυμο</h4>
+    <input type="text" placeholder="Επώνυμο"
+                       name="lastname"
+                       value="{{request.form.lastname}}"
+                       required>
+    </p>
+    <p>
+    <h4>Ημερομηνία</h4>
+    <input type="date" name="duty_date"
+                       value="{{request.form.duty_date}}"
+                       required>
+    </p>
+    <p>
+    <select name="duty_type">
+        <option value="ΚΕΗΠ">ΚΕΗΠ</option>
+        <option value="Σκοπιά">Σκοπία</option>
+        <option value="Περίπολος">Περίπολος</option>
+        <option value="Πύλη">Πύλη</option>
+    </select>
+    </p>
+    <p>
+    <button class="button" value="submit"> Submit </button>
+    </p>
+</form>
+{% endblock %}
