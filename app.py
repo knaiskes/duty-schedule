@@ -121,7 +121,7 @@ def register():
     form = RegistrationForm(request.form)
 
     if request.method == "POST" and form.validate():
-        print(form.username.data, form.email.data, form.password.data)
+        print(form.name.data, form.lastname.data, form.password.data)
         flash("Ο χρήστης καταχωρήθηκε")
 
     return render_template("register.html", form=form)
