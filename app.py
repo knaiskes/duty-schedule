@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, url_for, redirect, jsonify
+from flask import Flask, render_template, request, url_for, redirect, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os.path
 import requests
 import json
 from datetime import datetime
+from forms import RegistrationForm
 
 DATABASE = "database.db"
 
@@ -12,6 +13,7 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = "secret_later"
 
 db = SQLAlchemy(app)
 marshmallow = Marshmallow(app)
@@ -113,6 +115,16 @@ def add_duty_form():
                 "duty_type": duty_type}
         add_duty = requests.post(api_url, data = json.dumps(data), headers = headers)
     return render_template("addDuty.html")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegistrationForm(request.form)
+
+    if request.method == "POST" and form.validate():
+        print(form.name.data, form.lastname.data, form.password.data)
+        flash("Ο χρήστης καταχωρήθηκε")
+
+    return render_template("register.html", form=form)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
