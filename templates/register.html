@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% from "_formhelpers.html" import render_field %}
 <form method=post>
     {{ form.hidden_tag() }}
@@ -16,3 +19,4 @@
     {% endif %}
     {% endwith %}
 </form>
+{% endblock %}
