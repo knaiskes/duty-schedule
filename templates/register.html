@@ -1,0 +1,18 @@
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+    {{ form.hidden_tag() }}
+    <dl>
+        {{ render_field(form.username) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.confirm) }}
+    </dl>
+    <p><input type=submit value=Register>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <h4> {{message}} </h4>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</form>
