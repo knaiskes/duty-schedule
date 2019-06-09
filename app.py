@@ -21,6 +21,15 @@ marshmallow = Marshmallow(app)
 headers = {"Content-type": "application/json", "Accept": "text/plain"}
 api_url = "http://localhost:5000/api.duties"
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(30))
+    lastname = db.Column(db.String(30))
+
+    def __init__(self, name, lastname):
+        self.name = name
+        self.lastname = lastname
+
 class Duty(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
@@ -40,6 +49,13 @@ class DutySchema(marshmallow.Schema):
 
 duty_schema = DutySchema(strict = True)
 duties_schema = DutySchema(many = True, strict = True)
+
+class UserSchema(marshmallow.Schema):
+    class Meta:
+        fields = ("id", "name", "lastname")
+
+user_schema = UserSchema(strict = True)
+users_schema = UserSchema(many = True, strict = True)
 
 def string_to_datetime(str_input):
     str_input = datetime.strptime(str_input, "%Y-%m-%d")
@@ -93,6 +109,39 @@ def delete_duty(id):
     db.session.commit()
 
     return duty_schema.jsonify(delete_a_duty)
+
+@app.route("/api.users", methods=["GET"])
+def get_all_users():
+    all_users = User.query.all()
+    all_users = users_schema.dump(all_users)
+    return jsonify(all_users.data)
+
+@app.route("/api.users", methods=["POST"])
+def add_user():
+    name = request.json["name"]
+    lastname = request.json["lastname"]
+
+    add_new_user = User(name, lastname)
+    db.session.add(add_new_user)
+    db.session.commit()
+
+    return user_schema.jsonify(add_new_user)
+
+@app.route("/api.users/<id>", methods=["PUT"])
+def update_user(id):
+    update_a_user = User.query.get(id)
+
+    name = request.json["name"]
+    lastname = request.json["lastname"]
+
+    update_a_user.name = name
+    update_a_user.lastname = lastname
+
+    db.session.commit()
+
+    return user_schema.jsonify(update_a_user)
+
+# Routes - Pages
 
 @app.route("/duties", methods=["GET"])
 def duties():
