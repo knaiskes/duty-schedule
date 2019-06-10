@@ -141,6 +141,14 @@ def update_user(id):
 
     return user_schema.jsonify(update_a_user)
 
+@app.route("/api.users/<id>", methods=["DELETE"])
+def delete_user(id):
+    delete_a_user = User.query.get(id)
+    db.session.delete(delete_a_user)
+    db.session.commit()
+
+    return user_schema.jsonify(delete_a_user)
+
 # Routes - Pages
 
 @app.route("/duties", methods=["GET"])
