@@ -4,6 +4,7 @@ import os.path
 import requests
 from datetime import datetime
 from forms import RegistrationForm
+from models import *
 
 DATABASE = "database.db"
 
@@ -13,29 +14,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_later"
 
-db = SQLAlchemy(app)
+db.init_app(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(30))
-    lastname = db.Column(db.String(30))
-
-    def __init__(self, name, lastname):
-        self.name = name
-        self.lastname = lastname
-
-class Duty(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(30))
-    lastname = db.Column(db.String(30))
-    duty_date = db.Column(db.Date)
-    duty_type = db.Column(db.String(30))
-
-    def __init__(self, name, lastname, duty_date, duty_type):
-        self.name = name
-        self.lastname = lastname
-        self.duty_date = duty_date
-        self.duty_type = duty_type
 
 def string_to_datetime(str_input):
     str_input = datetime.strptime(str_input, "%Y-%m-%d")
