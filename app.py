@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os.path
 import requests
 from datetime import datetime
-from forms import RegistrationForm
+from forms import RegistrationForm, AddDutyForm
 from models import *
 
 DATABASE = "database.db"
@@ -30,19 +30,20 @@ def duties():
 
 @app.route("/add_duty", methods=["GET", "POST"])
 def add_duty_form():
-    if request.method == "POST":
-        name = request.form["name"]
-        lastname = request.form["lastname"]
-        duty_date = request.form["duty_date"]
-        duty_type= request.form["duty_type"]
+    form = AddDutyForm(request.form)
+    if request.method == "POST" and form.validate():
+        #name = request.form["name"]
+        #lastname = request.form["lastname"]
+        #duty_date = request.form["duty_date"]
+        #duty_type= request.form["duty_type"]
 
-        duty_date = string_to_datetime(duty_date)
+        #duty_date = string_to_datetime(duty_date)
 
-        add_new_duty = Duty(name, lastname, duty_date, duty_type)
-        db.session.add(add_new_duty)
-        db.session.commit()
+        #add_new_duty = Duty(name, lastname, duty_date, duty_type)
+        #db.session.add(add_new_duty)
+        #db.session.commit()
 
-    return render_template("addDuty.html")
+    return render_template("addDuty.html", form=form)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

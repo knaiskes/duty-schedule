@@ -2,7 +2,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% from "_formhelpers.html" import render_field %}
 <form method="POST">
+    {{ form.hidden_tag() }}
+    <dl>
+        {{ render_field(form.name) }}
+    </dl>
+    <p><input type=submit value=Εγγραφή></p>
+    <!--
     <p>
     <h4>Όνομα</h4>
     <input type="text" placeholder="Όνομα"
@@ -35,4 +42,5 @@
     <button class="button" value="submit"> Submit </button>
     </p>
 </form>
+    -->
 {% endblock %}
