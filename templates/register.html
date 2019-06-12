@@ -1,17 +1,16 @@
-<title>Προσθήκη ΣΤΡ</title>
+<title>Προσθήκη χρήστη</title>
 {% extends "base.html" %}
 
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
-<form method=post>
+<form method="POST">
     {{ form.hidden_tag() }}
     <dl>
         {{ render_field(form.name) }}
         {{ render_field(form.lastname) }}
-        {{ render_field(form.password) }}
-        {{ render_field(form.confirm) }}
+        {{ render_field(form.rank) }}
     </dl>
-    <p><input type=submit value=Εγγραφή></p>
+    <p><input type=submit value=Προσθήκη></p>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}

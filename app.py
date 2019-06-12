@@ -35,7 +35,7 @@ def duties():
 def add_duty_form():
     form = AddDutyForm(request.form)
     if request.method == "POST" and form.validate():
-        duty_user = form.name.data
+        duty_user = form.lastname.data
         duty_type = form.duty_type.data
         duty_date = form.duty_date.data
 
@@ -50,7 +50,10 @@ def register():
     form = RegistrationForm(request.form)
 
     if request.method == "POST" and form.validate():
-        print(form.name.data, form.lastname.data, form.rank.data)
+        new_user = User(form.name.data, form.lastname.data, form.rank.data)
+        db.session.add(new_user)
+        db.session.commit()
+
         flash("Ο χρήστης καταχωρήθηκε")
 
     return render_template("register.html", form=form)

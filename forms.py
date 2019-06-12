@@ -10,9 +10,7 @@ class RegistrationForm(FlaskForm):
             validators=[DataRequired(), Length(min=2, max=20)])
     lastname = StringField("Επώνυμο", validators=[DataRequired(),
         Length(min=2, max=20)])
-    password = PasswordField("Κωδικός", validators=[DataRequired()])
-    confirm = PasswordField("Επαλήθευση κωδικού",
-            validators=[DataRequired(), EqualTo("password")])
+    rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
     submit = SubmitField("submit")
 
 def user_query():
