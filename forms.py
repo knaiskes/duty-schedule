@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms.fields.html5 import DateField
 from models import User
 
 class RegistrationForm(FlaskForm):
@@ -15,8 +16,11 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("submit")
 
 def user_query():
-    return User.query.distinct(User.name).group_by(User.name).all()
+    return User.query.distinct(User.lastname).group_by(User.lastname).all()
 
 class AddDutyForm(FlaskForm):
-    name = QuerySelectField(query_factory = user_query, get_label="name")
+    lastname = QuerySelectField(query_factory = user_query, get_label="lastname")
+    duty_type = SelectField("Τύπος υπηρεσίας",
+            choices = [("ΚΕΗΠ","ΚΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
+    duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
     submit = SubmitField("submit")
