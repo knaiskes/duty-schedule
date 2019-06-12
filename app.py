@@ -43,6 +43,8 @@ def add_duty_form():
         db.session.add(add_new_duty)
         db.session.commit()
 
+        flash("Η υπηρεσία προστέθηκε")
+
     return render_template("addDuty.html", form=form)
 
 @app.route("/register", methods=["GET", "POST"])

@@ -12,5 +12,13 @@
         {{ render_field(form.duty_date) }}
     </dl>
     <p><input type=submit value=Καταχώρηση></p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <h4> {{message}} </h4>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 </form>
 {% endblock %}
