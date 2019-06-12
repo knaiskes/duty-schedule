@@ -3,44 +3,14 @@
 
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
+<h1>Προσθήκη νέας υπηρεσίας</h1>
 <form method="POST">
     {{ form.hidden_tag() }}
     <dl>
-        {{ render_field(form.name) }}
+        {{ render_field(form.lastname) }}
+        {{ render_field(form.duty_type) }}
+        {{ render_field(form.duty_date) }}
     </dl>
-    <p><input type=submit value=Εγγραφή></p>
-    <!--
-    <p>
-    <h4>Όνομα</h4>
-    <input type="text" placeholder="Όνομα"
-                       name="name"
-                       value="{{request.form.name}}"
-                       required>
-    </p>
-    <p>
-    <h4>Επώνυμο</h4>
-    <input type="text" placeholder="Επώνυμο"
-                       name="lastname"
-                       value="{{request.form.lastname}}"
-                       required>
-    </p>
-    <p>
-    <h4>Ημερομηνία</h4>
-    <input type="date" name="duty_date"
-                       value="{{request.form.duty_date}}"
-                       required>
-    </p>
-    <p>
-    <select name="duty_type">
-        <option value="ΚΕΗΠ">ΚΕΗΠ</option>
-        <option value="Σκοπιά">Σκοπία</option>
-        <option value="Περίπολος">Περίπολος</option>
-        <option value="Πύλη">Πύλη</option>
-    </select>
-    </p>
-    <p>
-    <button class="button" value="submit"> Submit </button>
-    </p>
+    <p><input type=submit value=Καταχώρηση></p>
 </form>
-    -->
 {% endblock %}

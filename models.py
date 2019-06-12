@@ -6,10 +6,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
     lastname = db.Column(db.String(30))
+    rank = db.Column(db.String(15))
 
-    def __init__(self, name, lastname):
+    def __init__(self, name, lastname, rank):
         self.name = name
         self.lastname = lastname
+        self.rank = rank
 
 class Duty(db.Model):
     id = db.Column(db.Integer, primary_key = True)

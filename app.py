@@ -14,7 +14,10 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_later"
 
-db.init_app(app)
+db.app= app
+
+with app.app_context():
+    db.init_app(app)
 
 
 def string_to_datetime(str_input):
@@ -32,16 +35,13 @@ def duties():
 def add_duty_form():
     form = AddDutyForm(request.form)
     if request.method == "POST" and form.validate():
-        #name = request.form["name"]
-        #lastname = request.form["lastname"]
-        #duty_date = request.form["duty_date"]
-        #duty_type= request.form["duty_type"]
+        duty_user = form.lastname.data
+        duty_type = form.duty_type.data
+        duty_date = form.duty_date.data
 
-        #duty_date = string_to_datetime(duty_date)
-
-        #add_new_duty = Duty(name, lastname, duty_date, duty_type)
-        #db.session.add(add_new_duty)
-        #db.session.commit()
+        add_new_duty = Duty(duty_user.name, duty_user.lastname, duty_date, duty_type)
+        db.session.add(add_new_duty)
+        db.session.commit()
 
     return render_template("addDuty.html", form=form)
 
@@ -50,7 +50,10 @@ def register():
     form = RegistrationForm(request.form)
 
     if request.method == "POST" and form.validate():
-        print(form.name.data, form.lastname.data, form.password.data)
+        new_user = User(form.name.data, form.lastname.data, form.rank.data)
+        db.session.add(new_user)
+        db.session.commit()
+
         flash("Ο χρήστης καταχωρήθηκε")
 
     return render_template("register.html", form=form)
