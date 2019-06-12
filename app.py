@@ -14,7 +14,10 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "secret_later"
 
-db.init_app(app)
+db.app= app
+
+with app.app_context():
+    db.init_app(app)
 
 
 def string_to_datetime(str_input):
@@ -47,7 +50,7 @@ def register():
     form = RegistrationForm(request.form)
 
     if request.method == "POST" and form.validate():
-        print(form.name.data, form.lastname.data, form.password.data)
+        print(form.name.data, form.lastname.data, form.rank.data)
         flash("Ο χρήστης καταχωρήθηκε")
 
     return render_template("register.html", form=form)
