@@ -19,6 +19,9 @@ db.app= app
 with app.app_context():
     db.init_app(app)
 
+# Create database if it does not exist
+if(os.path.exists(DATABASE) == False):
+    db.create_all()
 
 def string_to_datetime(str_input):
     str_input = datetime.strptime(str_input, "%Y-%m-%d")
