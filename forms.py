@@ -13,6 +13,11 @@ class RegistrationForm(FlaskForm):
     rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
     submit = SubmitField("submit")
 
+class LoginForm(FlaskForm):
+    name = StringField("Όνομα χρήστη", validators=[DataRequired()])
+    password = PasswordField("Κωδικός", validators=[DataRequired()])
+    submit = SubmitField("submit")
+
 def user_query():
     return User.query.distinct(User.lastname).group_by(User.lastname).all()
 

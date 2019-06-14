@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os.path
 import requests
 from datetime import datetime
-from forms import RegistrationForm, AddDutyForm
+from forms import RegistrationForm, AddDutyForm, LoginForm
 from models import *
 
 DATABASE = "database.db"
@@ -62,6 +62,17 @@ def register():
         flash("Ο χρήστης καταχωρήθηκε")
 
     return render_template("register.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm(request.form)
+
+    if request.method == "POST" and form.validate():
+        # test form
+        if form.name.data == "test" and form.password.data == "test":
+            return redirect(url_for("duties"))
+
+    return render_template("login.html", form=form)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
