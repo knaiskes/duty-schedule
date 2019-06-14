@@ -19,6 +19,6 @@ def user_query():
 class AddDutyForm(FlaskForm):
     lastname = QuerySelectField(query_factory = user_query, get_label="lastname")
     duty_type = SelectField("Τύπος υπηρεσίας",
-            choices = [("ΚΕΗΠ","ΚΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
+            choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
     submit = SubmitField("submit")
