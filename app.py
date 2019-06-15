@@ -5,6 +5,7 @@ import requests
 from datetime import datetime
 from forms import RegistrationForm, AddDutyForm, LoginForm
 from models import *
+from flask_login import LoginManager, login_user, login_required
 
 DATABASE = "database.db"
 
@@ -19,6 +20,13 @@ db.app= app
 with app.app_context():
     db.init_app(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(int(user_id))
+
 # Create database if it does not exist
 if(os.path.exists(DATABASE) == False):
     db.create_all()
@@ -28,6 +36,7 @@ def string_to_datetime(str_input):
     return str_input
 
 @app.route("/duties", methods=["GET"])
+@login_required
 def duties():
     if request.method == "GET":
         # Get all duties from the database
@@ -67,9 +76,10 @@ def register():
 def login():
     form = LoginForm(request.form)
 
-    if request.method == "POST" and form.validate():
-        # test form
-        if form.name.data == "test" and form.password.data == "test":
+    if form.validate_on_submit():
+        user = User.query.filter_by(name = form.name.data).first()
+        if user:
+            login_user(user)
             return redirect(url_for("duties"))
 
     return render_template("login.html", form=form)
