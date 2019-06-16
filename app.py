@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from forms import RegistrationForm, AddDutyForm, LoginForm
 from models import *
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user
 
 DATABASE = "database.db"
 
@@ -83,6 +83,12 @@ def login():
             return redirect(url_for("duties"))
 
     return render_template("login.html", form=form)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
