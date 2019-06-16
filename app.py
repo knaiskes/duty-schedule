@@ -95,5 +95,9 @@ def logout():
     logout_user()
     return redirect("/")
 
+@app.route("/")
+def index():
+    return redirect(url_for("duties"))
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
