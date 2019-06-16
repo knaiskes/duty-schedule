@@ -25,18 +25,21 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def user_loader(user_id):
-    return User.query.get(int(user_id))
+    return Admin.query.get(int(user_id))
 
 # Create database if it does not exist
 if(os.path.exists(DATABASE) == False):
     db.create_all()
+
+    # Add admin with the default login credentails
+    admin = Admin()
+    admin.add_Admin()
 
 def string_to_datetime(str_input):
     str_input = datetime.strptime(str_input, "%Y-%m-%d")
     return str_input
 
 @app.route("/duties", methods=["GET"])
-@login_required
 def duties():
     if request.method == "GET":
         # Get all duties from the database
@@ -44,6 +47,7 @@ def duties():
     return render_template("duties.html", duties_list=duties_list)
 
 @app.route("/add_duty", methods=["GET", "POST"])
+@login_required
 def add_duty_form():
     form = AddDutyForm(request.form)
     if request.method == "POST" and form.validate():
@@ -60,6 +64,7 @@ def add_duty_form():
     return render_template("addDuty.html", form=form)
 
 @app.route("/register", methods=["GET", "POST"])
+@login_required
 def register():
     form = RegistrationForm(request.form)
 
@@ -77,9 +82,9 @@ def login():
     form = LoginForm(request.form)
 
     if form.validate_on_submit():
-        user = User.query.filter_by(name = form.name.data).first()
-        if user:
-            login_user(user)
+        admin = Admin.query.filter_by(username = form.username.data).first()
+        if admin:
+            login_user(admin)
             return redirect(url_for("duties"))
 
     return render_template("login.html", form=form)
@@ -89,6 +94,10 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
+
+@app.route("/")
+def index():
+    return redirect(url_for("duties"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
