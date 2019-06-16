@@ -14,7 +14,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("submit")
 
 class LoginForm(FlaskForm):
-    name = StringField("Όνομα χρήστη", validators=[DataRequired()])
+    username = StringField("Όνομα χρήστη", validators=[DataRequired()])
     password = PasswordField("Κωδικός", validators=[DataRequired()])
     submit = SubmitField("submit")
 
