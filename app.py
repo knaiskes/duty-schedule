@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os.path
 import requests
 from datetime import datetime
-from forms import RegistrationForm, AddDutyForm, LoginForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user
 
@@ -99,9 +99,20 @@ def logout():
 def index():
     return redirect(url_for("duties"))
 
-@app.route("/edit/<int:id>")
+@app.route("/editDuty/<int:id>", methods=["GET", "POST"])
 def editDuty(id):
-    return "<h1>Edit</h1>"
+    form = EditDutyForm(request.form)
+    duty = Duty.query.get_or_404(id)
+
+    if request.method == "POST" and form.validate():
+        duty.lastname = form.lastname.data.lastname
+        duty.duty_type = form.duty_type.data
+        duty.duty_date = form.duty_date.data
+        duty.name = form.lastname.data.name
+
+        db.session.commit()
+        return redirect(url_for("duties"))
+    return render_template("edit_duty.html", form=form)
 
 @app.route("/deleteDuty/<int:id>")
 def deleteDuty(id):
