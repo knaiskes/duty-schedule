@@ -16,6 +16,8 @@
             <td>{{ duty.lastname  }}</td>
             <td>{{ duty.duty_date }}</td>
             <td>{{ duty.duty_type }}</td>
+            <td><a href="deleteDuty/{{duty.id}}">Delete</a></td>
+            <td><a href="editDuty/{{duty.id}}">Update</a></td>
         </tr>
         {% endfor %}
     </table>
