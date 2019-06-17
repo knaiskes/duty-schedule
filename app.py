@@ -99,5 +99,10 @@ def logout():
 def index():
     return redirect(url_for("duties"))
 
+@app.route("/edit/<int:id>")
+def editDuty(id):
+    duty = Duty.query.get_or_404(id)
+    return "<h1>Edit</h1>"
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
