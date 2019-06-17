@@ -101,8 +101,16 @@ def index():
 
 @app.route("/edit/<int:id>")
 def editDuty(id):
-    duty = Duty.query.get_or_404(id)
     return "<h1>Edit</h1>"
+
+@app.route("/deleteDuty/<int:id>")
+def deleteDuty(id):
+    duty = Duty.query.get_or_404(id)
+
+    if duty:
+        db.session.delete(duty)
+        db.session.commit()
+    return redirect(url_for("duties"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
