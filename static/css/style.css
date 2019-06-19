@@ -44,3 +44,5 @@ body {
 }
 
 #top-menu a:hover { color: #F6F6F6; }
+
+a { text-decoration: none; }

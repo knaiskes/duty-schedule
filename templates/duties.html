@@ -21,8 +21,8 @@
             <td>{{ duty.duty_date }}</td>
             <td>{{ duty.duty_type }}</td>
             {% if authorized %}
-            <td><a href="editDuty/{{duty.id}}">Update</a></td>
-            <td><a href="deleteDuty/{{duty.id}}">Delete</a></td>
+            <td><a href="editDuty/{{duty.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
+            <td><a href="deleteDuty/{{duty.id}}"><span style="font-size:35px;color:red;">&#10006</span></a></td>
             {% endif %}
         </tr>
         {% endfor %}
