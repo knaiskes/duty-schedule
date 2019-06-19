@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm
 from models import *
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 DATABASE = "database.db"
 
@@ -43,12 +43,18 @@ def string_to_datetime(str_input):
     str_input = datetime.strptime(str_input, "%Y-%m-%d")
     return str_input
 
+def user_is_authenticated():
+    if current_user.is_authenticated:
+        return True
+    return False
+
 @app.route("/duties", methods=["GET"])
 def duties():
+    authorized = user_is_authenticated()
     if request.method == "GET":
         # Get all duties from the database
         duties_list = Duty.query.all()
-    return render_template("duties.html", duties_list=duties_list)
+    return render_template("duties.html", duties_list=duties_list, authorized=authorized)
 
 @app.route("/add_duty", methods=["GET", "POST"])
 @login_required

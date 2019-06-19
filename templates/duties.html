@@ -9,6 +9,10 @@
             <th>Επίθετο</th>
             <th>Ημερομηνία</th>
             <th>Υπηρεσία</th>
+            {% if authorized %}
+            <th> Επεξεργασία</th>
+            <th>Διαγραφή</th>
+            {% endif %}
         </tr>
         {% for duty in duties_list %}
         <tr>
@@ -16,8 +20,10 @@
             <td>{{ duty.lastname  }}</td>
             <td>{{ duty.duty_date }}</td>
             <td>{{ duty.duty_type }}</td>
-            <td><a href="deleteDuty/{{duty.id}}">Delete</a></td>
+            {% if authorized %}
             <td><a href="editDuty/{{duty.id}}">Update</a></td>
+            <td><a href="deleteDuty/{{duty.id}}">Delete</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
