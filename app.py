@@ -22,6 +22,10 @@ with app.app_context():
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+# redirect to login page if user is not logged in
+login_manager.login_view = "login"
+# set a custom message
+login_manager.login_message = "Συνδεθείτε στο λογαριασμό σας για να αποκτήσετε πρόσβαση σε αυτή τη σελίδα"
 
 @login_manager.user_loader
 def user_loader(user_id):
