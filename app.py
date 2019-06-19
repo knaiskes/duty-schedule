@@ -135,10 +135,20 @@ def deleteDuty(id):
 
 @app.route("/users", methods=["GET", "POST"])
 @login_required
-def allusers():
+def users():
     if request.method == "GET":
         users_list = User.query.all()
     return render_template("users.html", users_list=users_list)
+
+@app.route("/deleteUser/<int:id>")
+@login_required
+def deleteUser(id):
+    user = User.query.get_or_404(id)
+
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+    return redirect(url_for("users"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
