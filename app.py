@@ -133,5 +133,12 @@ def deleteDuty(id):
         db.session.commit()
     return redirect(url_for("duties"))
 
+@app.route("/users", methods=["GET", "POST"])
+@login_required
+def allusers():
+    if request.method == "GET":
+        users_list = User.query.all()
+    return render_template("users.html", users_list=users_list)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
