@@ -13,6 +13,14 @@ class RegistrationForm(FlaskForm):
     rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
     submit = SubmitField("submit")
 
+class EditUserForm(FlaskForm):
+    name = StringField("Όνομα",
+            validators=[DataRequired(), Length(min=2, max=20)])
+    lastname = StringField("Επώνυμο", validators=[DataRequired(),
+        Length(min=2, max=20)])
+    rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
+    submit = SubmitField("submit")
+
 class LoginForm(FlaskForm):
     username = StringField("Όνομα χρήστη", validators=[DataRequired()])
     password = PasswordField("Κωδικός", validators=[DataRequired()])
