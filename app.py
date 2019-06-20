@@ -6,6 +6,7 @@ from datetime import datetime
 from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from helper_functions import encrypt_password
 
 DATABASE = "database.db"
 
@@ -93,9 +94,14 @@ def login():
 
     if form.validate_on_submit():
         admin = Admin.query.filter_by(username = form.username.data).first()
+        password = form.password.data
+
         if admin:
-            login_user(admin)
-            return redirect(url_for("duties"))
+            if encrypt_password(password) == admin.password:
+                login_user(admin)
+                return redirect(url_for("duties"))
+            else:
+                flash("Το όνομα χρήστη ή ο κωδικός που εισάγατε δεν αντιστοιχεί σε κανέναν λογαριασμό")
 
     return render_template("login.html", form=form)
 
