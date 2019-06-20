@@ -1,0 +1,25 @@
+<title>Διαθέσιμο προσωπικό</title>
+{% extends "base.html" %}
+
+{% block content %}
+<div id = "duty-table">
+    <table>
+        <tr>
+            <th>Βαθμός</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Επεξεργασία</th>
+            <th>Διαγραφή</th>
+        </tr>
+        {% for user in users_list %}
+        <tr>
+            <td>{{ user.rank      }}</td>
+            <td>{{ user.name      }}</td>
+            <td>{{ user.lastname  }}</td>
+            <td><a href="editUser/{{user.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
+            <td><a href="deleteUser/{{user.id}}"><span style="font-size:35px;color:red;">&#10006</span></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

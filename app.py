@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os.path
 import requests
 from datetime import datetime
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
@@ -132,6 +132,38 @@ def deleteDuty(id):
         db.session.delete(duty)
         db.session.commit()
     return redirect(url_for("duties"))
+
+@app.route("/users", methods=["GET", "POST"])
+@login_required
+def users():
+    if request.method == "GET":
+        users_list = User.query.all()
+    return render_template("users.html", users_list=users_list)
+
+@app.route("/editUser/<int:id>", methods=["GET", "POST"])
+@login_required
+def editUser(id):
+    form = EditUserForm(request.form)
+    user = User.query.get_or_404(id)
+
+    if request.method == "POST" and form.validate():
+        user.name = form.name.data
+        user.lastname = form.lastname.data
+        user.rank = form.rank.data
+
+        db.session.commit()
+        return redirect(url_for("users"))
+    return render_template("edit_user.html", form=form)
+
+@app.route("/deleteUser/<int:id>")
+@login_required
+def deleteUser(id):
+    user = User.query.get_or_404(id)
+
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+    return redirect(url_for("users"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
