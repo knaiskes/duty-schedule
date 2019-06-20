@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from helper_functions import encrypt_password
 
 db = SQLAlchemy()
 
@@ -13,6 +14,9 @@ class Admin(db.Model, UserMixin):
         # TODO in the first run of the app make user change the default password
         self.username = "admin"
         self.password = "admin"
+
+        # encrypt password
+        self.password = encrypt_password(self.password)
 
     def add_Admin(self):
         db.session.add(Admin())
