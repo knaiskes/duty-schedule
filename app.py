@@ -4,7 +4,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password
@@ -53,6 +53,7 @@ def user_is_authenticated():
 @app.route("/duties", methods=["GET", "POST"])
 def duties():
     form = SearchDuty(request.form)
+    form_options = DateOptions(request.form)
     authorized = user_is_authenticated()
     query_date = date.today()
 
@@ -60,10 +61,27 @@ def duties():
         query_date = form.search_date.data
         duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
 
+    if request.method == "POST" and form_options.validate() and form_options.submit.data:
+        if form_options.date_options.data == "all":
+            duties_list = Duty.query.all()
+        elif form_options.date_options.data == "week":
+            #TODO: a better solution must be implied
+            #The current solution is temporary
+            today = datetime.now().date()
+            start = today - timedelta(days=today.weekday())
+            end = start + timedelta(days=6)
+            duties_list = Duty.query.filter(Duty.duty_date.between(start,end)).all()
+        else:
+            from helper_functions import calculateDateQuery
+            query_date  = calculateDateQuery(form_options.date_options.data)
+            duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+
     if request.method == "GET":
         duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+
     return render_template("duties.html", duties_list=duties_list,
-            authorized=authorized, query_date=query_date, form=form)
+            authorized=authorized, query_date=query_date,
+            form=form, form_options=form_options)
 
 @app.route("/add_duty", methods=["GET", "POST"])
 @login_required
