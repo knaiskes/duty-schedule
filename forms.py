@@ -42,3 +42,7 @@ class EditDutyForm(FlaskForm):
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
     submit = SubmitField("submit")
+
+class SearchDuty(FlaskForm):
+    search_date = DateField("Ημερομηνία", format="%Y-%m-%d")
+    submit = SubmitField("submit")

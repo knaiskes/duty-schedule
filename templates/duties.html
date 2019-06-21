@@ -2,6 +2,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<h2>Οι υπηρεσίες για τις {{query_date}}</h1>
+
+{% from "_formhelpers.html" import render_field %}
+<h1>Αναζήτηση υπηρεσίας</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <dl>
+        {{ render_field(form.search_date) }}
+    </dl>
+    <p><input type=submit value=Αναζήτηση></p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <h4> {{message}} </h4>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</form>
 <div id = "duty-table">
     <table>
         <tr>

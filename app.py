@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import os.path
 import requests
-from datetime import datetime
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm
+from datetime import datetime, timedelta
+from datetime import date
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password
@@ -49,13 +50,20 @@ def user_is_authenticated():
         return True
     return False
 
-@app.route("/duties", methods=["GET"])
+@app.route("/duties", methods=["GET", "POST"])
 def duties():
+    form = SearchDuty(request.form)
     authorized = user_is_authenticated()
+    query_date = date.today()
+
+    if request.method == "POST" and form.validate():
+        query_date = form.search_date.data
+        duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+
     if request.method == "GET":
-        # Get all duties from the database
-        duties_list = Duty.query.all()
-    return render_template("duties.html", duties_list=duties_list, authorized=authorized)
+        duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+    return render_template("duties.html", duties_list=duties_list,
+            authorized=authorized, query_date=query_date, form=form)
 
 @app.route("/add_duty", methods=["GET", "POST"])
 @login_required
