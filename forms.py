@@ -44,5 +44,6 @@ class EditDutyForm(FlaskForm):
     submit = SubmitField("submit")
 
 class SearchDuty(FlaskForm):
-    search_date = DateField("Ημερομηνία", format="%Y-%m-%d")
+    search_date = DateField("Ημερομηνία", format="%Y-%m-%d",
+            validators=[DataRequired()])
     submit = SubmitField("submit")
