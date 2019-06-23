@@ -5,3 +5,16 @@ def encrypt_password(encrypt):
     password = hashlib.sha256()
     password = hashlib.sha256(encrypt.encode("utf8")).hexdigest()
     return password
+
+def calculateDateQuery(option):
+    from datetime import timedelta
+    from  datetime import date
+
+    available_options = {
+            "today": date.today(),
+            "tomorrow": date.today() + timedelta(days=1),
+            "week": date.today() + timedelta(days=7),
+            "month": 30,
+    }
+    return available_options[option]
+

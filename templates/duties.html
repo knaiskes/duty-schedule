@@ -21,6 +21,13 @@
     {% endif %}
     {% endwith %}
 </form>
+<form method="POST">
+    {{form.hidden_tag() }}
+    <dl>
+        {{ render_field(form_options.date_options) }}
+    </dl>
+    {{form_options.submit}}
+</form>
 <div id = "duty-table">
     <table>
         <tr>
