@@ -62,15 +62,24 @@ def duties():
         duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
 
     if request.method == "POST" and form_options.validate() and form_options.submit.data:
+        #TODO: a better solution must be implied
+        #The current solution is temporary
         if form_options.date_options.data == "all":
             duties_list = Duty.query.all()
         elif form_options.date_options.data == "week":
-            #TODO: a better solution must be implied
-            #The current solution is temporary
             today = datetime.now().date()
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             duties_list = Duty.query.filter(Duty.duty_date.between(start,end)).all()
+        elif form_options.date_options.data == "month":
+            import calendar
+            today = date.today()
+            current_month =  today.month
+            current_year = today.year
+            month_days = calendar.monthrange(current_year, current_month)[1]
+            start = date(current_year, current_month, 1)
+            end = date(current_year, current_month, month_days)
+            duties_list = Duty.query.filter(Duty.duty_date.between(start, end)).all()
         else:
             from helper_functions import calculateDateQuery
             query_date  = calculateDateQuery(form_options.date_options.data)
