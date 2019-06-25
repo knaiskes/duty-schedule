@@ -27,7 +27,8 @@ class LoginForm(FlaskForm):
     submit = SubmitField("submit")
 
 def user_query():
-    return User.query.distinct(User.lastname).group_by(User.lastname).all()
+    #return User.query.distinct(User.lastname).group_by(User.lastname).all()
+    return User.query.all()
 
 class AddDutyForm(FlaskForm):
     lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
