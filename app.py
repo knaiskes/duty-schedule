@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 import os.path
 import requests
 from datetime import datetime, timedelta
@@ -65,12 +66,12 @@ def duties():
         #TODO: a better solution must be implied
         #The current solution is temporary
         if form_options.date_options.data == "all":
-            duties_list = Duty.query.all()
+            duties_list = Duty.query.order_by(desc(Duty.duty_date)).all()
         elif form_options.date_options.data == "week":
             today = datetime.now().date()
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
-            duties_list = Duty.query.filter(Duty.duty_date.between(start,end)).all()
+            duties_list = Duty.query.order_by(desc(Duty.duty_date)).filter(Duty.duty_date.between(start,end)).all()
         elif form_options.date_options.data == "month":
             import calendar
             today = date.today()
@@ -79,7 +80,7 @@ def duties():
             month_days = calendar.monthrange(current_year, current_month)[1]
             start = date(current_year, current_month, 1)
             end = date(current_year, current_month, month_days)
-            duties_list = Duty.query.filter(Duty.duty_date.between(start, end)).all()
+            duties_list = Duty.query.order_by(desc(Duty.duty_date)).filter(Duty.duty_date.between(start, end)).all()
         else:
             from helper_functions import calculateDateQuery
             query_date  = calculateDateQuery(form_options.date_options.data)
