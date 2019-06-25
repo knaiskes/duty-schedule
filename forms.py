@@ -30,7 +30,8 @@ def user_query():
     return User.query.distinct(User.lastname).group_by(User.lastname).all()
 
 class AddDutyForm(FlaskForm):
-    lastname = QuerySelectField(query_factory = user_query, get_label="lastname")
+    lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
+            user.lastname + " " + user.name)
     duty_type = SelectField("Τύπος υπηρεσίας",
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
