@@ -52,7 +52,7 @@ class SearchDuty(FlaskForm):
     submit = SubmitField("submit")
 
 class DateOptions(FlaskForm):
-    date_options = SelectField("testing",
+    date_options = SelectField("Επιλογές",
             choices=[("today", "Σήμερα"), ("tomorrow", "Αύριο"),
                 ("week", "Εβδομάδα"), ("month", "Μήνας"), ("all", "Όλες")])
     submit = SubmitField("submit")
