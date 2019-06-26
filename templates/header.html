@@ -3,6 +3,11 @@
         <li><a href="duties">Λίστα υπηρεσιών</a></li>
         <li><a href="add_duty">Καταχώρηση υπηρεσίας</a></li>
         <li><a href="register">Προσθήκη νέου χρήστη</a></li>
+
+        {% if current_user.is_authenticated %}
+        <span style="float:right;"><li><a href="logout">Αποσυνδεθείτε</a></li></span>
+        {% else %}
         <span style="float:right;"><li><a href="login">Συνδεθείτε</a></li></span>
+        {% endif %}
     </ul>
 </div>
