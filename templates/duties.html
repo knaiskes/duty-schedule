@@ -3,31 +3,42 @@
 
 {% block content %}
 
-<h2>Οι υπηρεσίες για τις {{query_date}}</h1>
+<center><h2>Οι υπηρεσίες για τις {{query_date}}</h2></center>
 
 {% from "_formhelpers.html" import render_field %}
-<h1>Αναζήτηση υπηρεσίας</h1>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <dl>
-        {{ render_field(form.search_date) }}
-    </dl>
-    <p><input type=submit value=Αναζήτηση></p>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <h4> {{message}} </h4>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-</form>
-<form method="POST">
-    {{form.hidden_tag() }}
-    <dl>
-        {{ render_field(form_options.date_options) }}
-    </dl>
-    {{form_options.submit}}
-</form>
+<h4>Αναζήτηση υπηρεσιών</h4>
+    <div id="calendarSearchButton">
+        <button onclick="hideForm('calendarSearch')">&#128467;</button>
+    </div>
+    <div id="calendarSearch">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <dl>
+                {{ render_field(form.search_date) }}
+            </dl>
+            <p><input type=submit value=Αναζήτηση></p>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <h4> {{message}} </h4>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </form>
+    </div>
+    <div id="searchOptionsButton">
+        <button onclick="hideForm('searchOptions')">&#9776;</button>
+    </div>
+    <div id="searchOptions">
+        <form method="POST">
+            {{form.hidden_tag() }}
+            <dl>
+                {{ render_field(form_options.date_options) }}
+            </dl>
+            {{form_options.submit}}
+        </form>
+    </div>
+</div>
 <div id = "duty-table">
     <table>
         <tr>
@@ -53,5 +64,4 @@
         </tr>
         {% endfor %}
     </table>
-</div>
 {% endblock %}
