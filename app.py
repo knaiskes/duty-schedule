@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password
@@ -109,6 +109,15 @@ def add_duty_form():
         flash("Η υπηρεσία προστέθηκε")
 
     return render_template("addDuty.html", form=form)
+
+@app.route("/generate_duties", methods=["GET","POST"])
+@login_required
+def generate_duties():
+    form = GenerateDutieForm(request.form)
+    if request.method == "POST" and form.validate():
+        print("good")
+
+    return render_template("generateDuties.html", form=form)
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
