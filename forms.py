@@ -61,6 +61,7 @@ class GenerateDutieForm(FlaskForm):
     lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
             user.lastname + " " + user.name)
     add = SubmitField("Προσθήκη")
+    clear = SubmitField("clear")
     duty_type = SelectField("Τύπος υπηρεσίας",
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     days = IntegerField("Ημέρες")

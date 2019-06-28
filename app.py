@@ -30,6 +30,9 @@ login_manager.login_view = "login"
 # set a custom message
 login_manager.login_message = "Συνδεθείτε στο λογαριασμό σας για να αποκτήσετε πρόσβαση σε αυτή τη σελίδα"
 
+#list for generate_duties route
+users_list_gen = []
+
 @login_manager.user_loader
 def user_loader(user_id):
     return Admin.query.get(int(user_id))
@@ -114,10 +117,11 @@ def add_duty_form():
 @login_required
 def generate_duties():
     form = GenerateDutieForm(request.form)
-    if request.method == "POST" and form.validate():
-        print("good")
-
-    return render_template("generateDuties.html", form=form)
+    if request.method == "POST" and form.add.data:
+        users_list_gen.append(form.lastname.data)
+    if request.method == "POST" and form.clear.data:
+        users_list_gen.clear()
+    return render_template("generateDuties.html", form=form, users=users_list_gen)
 
 @app.route("/register", methods=["GET", "POST"])
 @login_required
