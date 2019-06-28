@@ -53,9 +53,9 @@ class SearchDuty(FlaskForm):
 
 class DateOptions(FlaskForm):
     date_options = SelectField("Επιλογές",
-            choices=[("today", "Σήμερα"), ("tomorrow", "Αύριο"),
-                ("week", "Εβδομάδα"), ("month", "Μήνας"), ("all", "Όλες")])
-            submit = SubmitField("submit")
+            choices=[("today", "Σήμερα"),
+                ("tomorrow", "Αύριο"),("week", "Εβδομάδα"), ("month", "Μήνας"), ("all", "Όλες")])
+    submit = SubmitField("submit")
 
 class GenerateDutieForm(FlaskForm):
     lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
