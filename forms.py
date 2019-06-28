@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField,IntegerField
 from wtforms.validators import DataRequired, Length, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields.html5 import DateField
@@ -55,4 +55,13 @@ class DateOptions(FlaskForm):
     date_options = SelectField("Επιλογές",
             choices=[("today", "Σήμερα"), ("tomorrow", "Αύριο"),
                 ("week", "Εβδομάδα"), ("month", "Μήνας"), ("all", "Όλες")])
+            submit = SubmitField("submit")
+
+class GenerateDutieForm(FlaskForm):
+    lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
+            user.lastname + " " + user.name)
+    add = SubmitField("Προσθήκη")
+    duty_type = SelectField("Τύπος υπηρεσίας",
+            choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
+    days = IntegerField("Ημέρες")
     submit = SubmitField("submit")
