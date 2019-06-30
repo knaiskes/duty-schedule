@@ -1,12 +1,22 @@
-<div id="top-menu">
-    <ul>
-        <li><a href="duties">Λίστα υπηρεσιών</a></li>
-        {% if current_user.is_authenticated %}
-        <li><a href="add_duty">Καταχώρηση υπηρεσίας</a></li>
-        <li><a href="register">Προσθήκη νέου χρήστη</a></li>
-        <span style="float:right;"><li><a href="logout">Αποσυνδεθείτε</a></li></span>
-        {% else %}
-        <span style="float:right;"><li><a href="login">Συνδεθείτε</a></li></span>
-        {% endif %}
-    </ul>
+<div class="navbar">
+    <a href="duties">Λίστα υπηρεσιών</a>
+    {% if current_user.is_authenticated %}
+    <div class="dropdown">
+        <button class="dropbtn">Υπηρεσίες</button>
+        <div class="dropdown-content">
+            <a href="add_duty">Καταχώρηση υπηρεσίας</a>
+            <a href="generate_duties">Αυτόματη παραγωγή υπηρεσιών</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Προσωπικό</button>
+        <div class="dropdown-content">
+            <a href="register">Προσθήκη προσωπικού</a>
+            <a href="users">Διαθέσιμο προσωπικό</a>
+        </div>
+    </div>
+    <span style="float:right;"><a href="logout">Αποσυνδεθείτε</a></span>
+    {% else %}
+    <span style="float:right;"><a href="login">Συνδεθείτε</a></span>
+    {% endif %}
 </div>
