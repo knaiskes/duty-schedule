@@ -32,7 +32,7 @@ def generateDuties(users_list):
         days_list.append(start)
         start += step
 
-    duties_list = zip(users_list, cycle(days_list)) if len(users_list) > len(days_list) else zip(cycle(users_list), days_list)
+    duties_list = list(zip(users_list, cycle(days_list)) if len(users_list) > len(days_list) else zip(cycle(users_list), days_list))
 
     return duties_list
 
