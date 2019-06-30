@@ -8,7 +8,7 @@ from datetime import date
 from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from helper_functions import encrypt_password
+from helper_functions import encrypt_password, generateDuties
 
 DATABASE = "database.db"
 
@@ -56,6 +56,9 @@ def user_is_authenticated():
 
 @app.route("/duties", methods=["GET", "POST"])
 def duties():
+    #cheap solution to clean the user_list_gen list
+    #by sending the user back to duties route after submitting
+    users_list_gen.clear()
     form = SearchDuty(request.form)
     form_options = DateOptions(request.form)
     authorized = user_is_authenticated()
@@ -121,6 +124,19 @@ def generate_duties():
         users_list_gen.append(form.lastname.data)
     if request.method == "POST" and form.clear.data:
         users_list_gen.clear()
+    if request.method == "POST" and form.validate():
+        days = form.days.data
+        duty_type = form.duty_type.data
+        users_generate = generateDuties(users_list_gen)
+        for i in users_generate:
+            name = i[0].name
+            lastname = i[0].lastname
+            date = i[1]
+            print(name, lastname, date, duty_type)
+            add_new_duty = Duty(name, lastname, date, duty_type)
+            db.session.add(add_new_duty)
+            db.session.commit()
+        return redirect(url_for("duties"))
     return render_template("generateDuties.html", form=form, users=users_list_gen)
 
 @app.route("/register", methods=["GET", "POST"])
