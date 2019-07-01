@@ -63,21 +63,31 @@ def duties():
     form_options = DateOptions(request.form)
     authorized = user_is_authenticated()
     query_date = date.today()
+    base_msg_form = "Οι υπηρεσίες για "
+    msg_form = base_msg_form + "σήμερα " + "(" + query_date.strftime("%d-%m-%Y") + ")"
 
     if request.method == "POST" and form.validate():
         query_date = form.search_date.data
         duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+        msg_form = base_msg_form + "τις " + query_date.strftime("%d-%m-%Y")
 
     if request.method == "POST" and form_options.validate() and form_options.submit.data:
         #TODO: a better solution must be implied
         #The current solution is temporary
         if form_options.date_options.data == "all":
             duties_list = Duty.query.order_by(desc(Duty.duty_date)).all()
+            msg_form = "Όλες οι υπηρεσίες"
         elif form_options.date_options.data == "week":
             today = datetime.now().date()
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             duties_list = Duty.query.order_by(desc(Duty.duty_date)).filter(Duty.duty_date.between(start,end)).all()
+            msg_form = base_msg_form + "την εβδομάδα " + "(" + start.strftime("%d-%m-%Y") + " - " + end.strftime("%d-%m-%Y") + ")"
+        elif form_options.date_options.data == "tomorrow":
+            from helper_functions import calculateDateQuery
+            query_date  = calculateDateQuery(form_options.date_options.data)
+            duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+            msg_form = base_msg_form + "αύριο " + "(" + query_date.strftime("%d-%m-%Y") + ")"
         elif form_options.date_options.data == "month":
             import calendar
             today = date.today()
@@ -87,6 +97,7 @@ def duties():
             start = date(current_year, current_month, 1)
             end = date(current_year, current_month, month_days)
             duties_list = Duty.query.order_by(desc(Duty.duty_date)).filter(Duty.duty_date.between(start, end)).all()
+            msg_form = base_msg_form + "τον μήνα " + "(" + start.strftime("%d-%m-%Y") + " - " + end.strftime("%d-%m-%Y") + ")"
         else:
             from helper_functions import calculateDateQuery
             query_date  = calculateDateQuery(form_options.date_options.data)
@@ -94,9 +105,10 @@ def duties():
 
     if request.method == "GET":
         duties_list = Duty.query.filter(Duty.duty_date == query_date).all()
+        msg_form = base_msg_form + "σήμερα " + "(" + query_date.strftime("%d-%m-%Y") + ")"
 
     return render_template("duties.html", duties_list=duties_list,
-            authorized=authorized, query_date=query_date,
+            authorized=authorized, msg_form=msg_form,
             form=form, form_options=form_options)
 
 @app.route("/add_duty", methods=["GET", "POST"])
