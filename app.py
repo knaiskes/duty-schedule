@@ -45,10 +45,6 @@ if(os.path.exists(DATABASE) == False):
     admin = Admin()
     admin.add_Admin()
 
-def string_to_datetime(str_input):
-    str_input = datetime.strptime(str_input, "%Y-%m-%d")
-    return str_input
-
 def user_is_authenticated():
     if current_user.is_authenticated:
         return True
