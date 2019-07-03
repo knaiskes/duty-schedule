@@ -116,15 +116,15 @@ a { text-decoration: none; }
     font-size: 18px;
 }
 
-#register-form {
+#append-form {
     text-align: center;
-    margin: 75px auto auto;
+    margin: 30px auto auto;
     border: 1px solid #F7F7F7;
     display: inline-block;
     font-size: 20px;
 }
 
-#register-form input[type=text], input[type=password] {
+#append-form input[type=text], input[type=password] {
     background-color: #FBFBFB;
     width: 300px;
     border: 1px solid #006666;
@@ -133,7 +133,7 @@ a { text-decoration: none; }
     font-size: 18px;
 }
 
-#register-form input[type=submit]{
+#append-form input[type=submit]{
     background-color: #157539;
     color: white;
     padding: 14px 20px;
@@ -145,7 +145,7 @@ a { text-decoration: none; }
     font-size: 18px;
 }
 
-#register-form select{
+#append-form select{
     background-color: #E6E6FA;
     color: black;
     padding: 14px 20px;
