@@ -7,11 +7,12 @@ from models import User
 
 class RegistrationForm(FlaskForm):
     name = StringField("Όνομα",
-            validators=[DataRequired(), Length(min=2, max=20)])
+            validators=[DataRequired(), Length(min=2, max=20)],
+            render_kw={"placeholder": "Όνομα"})
     lastname = StringField("Επώνυμο", validators=[DataRequired(),
-        Length(min=2, max=20)])
+        Length(min=2, max=20)], render_kw={"placeholder": "Επώνυμο"})
     rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
-    submit = SubmitField("submit")
+    submit = SubmitField("Προσθήκη")
 
 class EditUserForm(FlaskForm):
     name = StringField("Όνομα",
@@ -22,9 +23,11 @@ class EditUserForm(FlaskForm):
     submit = SubmitField("submit")
 
 class LoginForm(FlaskForm):
-    username = StringField("Όνομα χρήστη", validators=[DataRequired()])
-    password = PasswordField("Κωδικός", validators=[DataRequired()])
-    submit = SubmitField("submit")
+    username = StringField("Όνομα χρήστη", validators=[DataRequired()],
+            render_kw={"placeholder": "Όνομα χρήστη"})
+    password = PasswordField("Κωδικός", validators=[DataRequired()],
+            render_kw={"placeholder": "Κωδικός"})
+    submit = SubmitField("Είσοδος")
 
 def user_query():
     #return User.query.distinct(User.lastname).group_by(User.lastname).all()
