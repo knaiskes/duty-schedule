@@ -6,21 +6,23 @@ body { text-align: center; }
 
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
-<h1>Προσθήκη νέας υπηρεσίας</h1>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <dl>
-        {{ render_field(form.lastname)  }}
-        {{ render_field(form.duty_type) }}
-        {{ render_field(form.duty_date) }}
-        {{ render_field(form.submit)    }}
-    </dl>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <h4> {{message}} </h4>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-</form>
+<h3>Προσθήκη νέας υπηρεσίας</h3>
+<div id="append-form">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <dl>
+            {{ render_field(form.lastname)  }}
+            {{ render_field(form.duty_type) }}
+            {{ render_field(form.duty_date) }}
+            {{ render_field(form.submit)    }}
+        </dl>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h4> {{message}} </h4>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </form>
+</div>
 {% endblock %}
