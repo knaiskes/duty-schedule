@@ -22,9 +22,11 @@ class EditUserForm(FlaskForm):
     submit = SubmitField("submit")
 
 class LoginForm(FlaskForm):
-    username = StringField("Όνομα χρήστη", validators=[DataRequired()])
-    password = PasswordField("Κωδικός", validators=[DataRequired()])
-    submit = SubmitField("submit")
+    username = StringField("Όνομα χρήστη", validators=[DataRequired()],
+            render_kw={"placeholder": "Όνομα χρήστη"})
+    password = PasswordField("Κωδικός", validators=[DataRequired()],
+            render_kw={"placeholder": "Κωδικός"})
+    submit = SubmitField("Είσοδος")
 
 def user_query():
     #return User.query.distinct(User.lastname).group_by(User.lastname).all()
