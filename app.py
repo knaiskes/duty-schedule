@@ -37,6 +37,10 @@ users_list_gen = []
 def user_loader(user_id):
     return Admin.query.get(int(user_id))
 
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect('/login?next=' + request.path)
+
 # Create database if it does not exist
 if(os.path.exists(DATABASE) == False):
     db.create_all()
