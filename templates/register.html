@@ -9,8 +9,8 @@
         {{ render_field(form.name) }}
         {{ render_field(form.lastname) }}
         {{ render_field(form.rank) }}
+        {{ render_field(form.submit) }}
     </dl>
-    <p><input type=submit value=Προσθήκη></p>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
