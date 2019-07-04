@@ -15,8 +15,8 @@
             {{ form.hidden_tag() }}
             <dl>
                 {{ render_field(form.search_date) }}
+                {{ render_field(form.submit)      }}
             </dl>
-            <p><input type=submit value=Αναζήτηση></p>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
