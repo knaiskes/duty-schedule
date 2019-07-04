@@ -53,13 +53,13 @@ class EditDutyForm(FlaskForm):
 class SearchDuty(FlaskForm):
     search_date = DateField("Ημερομηνία", format="%Y-%m-%d",
             validators=[DataRequired()])
-    submit = SubmitField("submit")
+    submit = SubmitField("Αναζήτηση")
 
 class DateOptions(FlaskForm):
     date_options = SelectField("Επιλογές",
             choices=[("today", "Σήμερα"),
                 ("tomorrow", "Αύριο"),("week", "Εβδομάδα"), ("month", "Μήνας"), ("all", "Όλες")])
-    submit = SubmitField("submit")
+    submit = SubmitField("Αναζήτηση")
 
 class GenerateDutieForm(FlaskForm):
     lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
