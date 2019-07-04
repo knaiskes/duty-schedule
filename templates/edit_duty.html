@@ -7,12 +7,11 @@
 <form method="POST">
     {{ form.hidden_tag() }}
     <dl>
-        {{ render_field(form.lastname) }}
+        {{ render_field(form.lastname)  }}
         {{ render_field(form.duty_type) }}
         {{ render_field(form.duty_date) }}
+        {{ render_field(form.submit)    }}
     </dl>
-    <p><input type=submit value=Καταχώρηση></p>
-
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
