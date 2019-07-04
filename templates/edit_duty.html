@@ -1,24 +1,28 @@
 <title>Επεξεργασία υπηρεσίας</title>
+<style>
+body { text-align: center; }
+</style>
 {% extends "base.html" %}
 
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
-<h1>Επεξεργασίας υπηρεσίας</h1>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <dl>
-        {{ render_field(form.lastname) }}
-        {{ render_field(form.duty_type) }}
-        {{ render_field(form.duty_date) }}
-    </dl>
-    <p><input type=submit value=Καταχώρηση></p>
-
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <h4> {{message}} </h4>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-</form>
+<h3>Επεξεργασίας υπηρεσίας</h3>
+<div id="edit-form">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <dl>
+            {{ render_field(form.lastname)  }}
+            {{ render_field(form.duty_type) }}
+            {{ render_field(form.duty_date) }}
+            {{ render_field(form.submit)    }}
+        </dl>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h4> {{message}} </h4>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </form>
+</div>
 {% endblock %}

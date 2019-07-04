@@ -23,6 +23,10 @@ db.app = app
 with app.app_context():
     db.init_app(app)
 
+def string_to_datetime(str_input):
+    str_input = datetime.strptime(str_input, "%Y-%m-%d")
+    return str_input
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 # redirect to login page if user is not logged in
@@ -196,6 +200,10 @@ def index():
 def editDuty(id):
     form = EditDutyForm(request.form)
     duty = Duty.query.get_or_404(id)
+
+    if request.method == "GET":
+        form.duty_date.data = string_to_datetime(duty.duty_date.strftime("%Y-%m-%d"))
+        form.duty_type.data = duty.duty_type
 
     if request.method == "POST" and form.validate():
         duty.lastname = form.lastname.data.lastname
