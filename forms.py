@@ -20,7 +20,7 @@ class EditUserForm(FlaskForm):
     lastname = StringField("Επώνυμο", validators=[DataRequired(),
         Length(min=2, max=20)])
     rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
-    submit = SubmitField("submit")
+    submit = SubmitField("Αποθήκευση αλλαγών")
 
 class LoginForm(FlaskForm):
     username = StringField("Όνομα χρήστη", validators=[DataRequired()],
@@ -43,12 +43,12 @@ class AddDutyForm(FlaskForm):
     submit = SubmitField("Προσθήκη")
 
 class EditDutyForm(FlaskForm):
-    lastname = QuerySelectField(query_factory = user_query,
+    lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query,
             get_label=lambda user: user.lastname + " " + user.name)
     duty_type = SelectField("Τύπος υπηρεσίας",
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
-    submit = SubmitField("Καταχώρηση")
+    submit = SubmitField("Αποθήκευση αλλαγών")
 
 class SearchDuty(FlaskForm):
     search_date = DateField("Ημερομηνία", format="%Y-%m-%d",
