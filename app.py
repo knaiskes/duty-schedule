@@ -229,6 +229,11 @@ def editUser(id):
     form = EditUserForm(request.form)
     user = User.query.get_or_404(id)
 
+    if request.method == "GET":
+        form.name.data = user.name
+        form.lastname.data = user.lastname
+        form.rank.data = user.rank
+
     if request.method == "POST" and form.validate():
         user.name = form.name.data
         user.lastname = form.lastname.data
