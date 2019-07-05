@@ -11,7 +11,11 @@ class RegistrationForm(FlaskForm):
             render_kw={"placeholder": "Όνομα"})
     lastname = StringField("Επώνυμο", validators=[DataRequired(),
         Length(min=2, max=20)], render_kw={"placeholder": "Επώνυμο"})
-    rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
+    rank = SelectField("Βαθμός", choices = [("Στρατιώτης","Στρατιώτης"),
+        ("Υποδεκανέας","Υποδεκανέας"), ("Δεκανέας", "Δεκανέας"),
+        ("Λοχίας", "Λοχίας"), ("Επιλοχίας", "Επιλοχίας"),
+        ("Αρχιλοχίας", "Αρχιλοχίας"), ("Ανθυπασπιστής", "Ανθυπασπιστής"),
+        ("Δόκιμος Έφεδρος Αξιωματικός", "Δόκιμος Έφεδρος Αξιωματικός")])
     submit = SubmitField("Προσθήκη")
 
 class EditUserForm(FlaskForm):
@@ -19,7 +23,11 @@ class EditUserForm(FlaskForm):
             validators=[DataRequired(), Length(min=2, max=20)])
     lastname = StringField("Επώνυμο", validators=[DataRequired(),
         Length(min=2, max=20)])
-    rank = SelectField("Βαθμός", choices = [("ΣΤΡ","ΣΤΡ"), ("ΛΧΙΑΣ","ΛΧΙΑΣ")])
+    rank = SelectField("Βαθμός", choices = [("Στρατιώτης","Στρατιώτης"),
+        ("Υποδεκανέας","Υποδεκανέας"), ("Δεκανέας", "Δεκανέας"),
+        ("Λοχίας", "Λοχίας"), ("Επιλοχίας", "Επιλοχίας"),
+        ("Αρχιλοχίας", "Αρχιλοχίας"), ("Ανθυπασπιστής", "Ανθυπασπιστής"),
+        ("Δόκιμος Έφεδρος Αξιωματικός", "Δόκιμος Έφεδρος Αξιωματικός")])
     submit = SubmitField("Αποθήκευση αλλαγών")
 
 class LoginForm(FlaskForm):
