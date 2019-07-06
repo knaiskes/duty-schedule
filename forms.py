@@ -74,11 +74,11 @@ class DateOptions(FlaskForm):
     submit = SubmitField("Αναζήτηση")
 
 class GenerateDutieForm(FlaskForm):
-    lastname = QuerySelectField(query_factory = user_query, get_label=lambda user:
+    lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query, get_label=lambda user:
             user.lastname + " " + user.name)
-    add = SubmitField("Προσθήκη")
-    clear = SubmitField("clear")
+    add = SubmitField("Προσθήκη στη λίστα")
+    clear = SubmitField("Καθαρισμός λίστας")
     duty_type = SelectField("Τύπος υπηρεσίας",
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
     days = IntegerField("Ημέρες")
-    submit = SubmitField("submit")
+    submit = SubmitField("Αυτόματη παραγωγή")
