@@ -1,22 +1,22 @@
 <div class="navbar">
-    <a href="duties">Λίστα υπηρεσιών</a>
+    <a href="{{ url_for('duties') }}">Λίστα υπηρεσιών</a>
     {% if current_user.is_authenticated %}
     <div class="dropdown">
         <button class="dropbtn">Υπηρεσίες</button>
         <div class="dropdown-content">
-            <a href="add_duty">Καταχώρηση υπηρεσίας</a>
-            <a href="generate_duties">Αυτόματη παραγωγή υπηρεσιών</a>
+            <a href="{{ url_for('add_duty_form') }}">Καταχώρηση υπηρεσίας</a>
+            <a href="{{ url_for('generate_duties') }}">Αυτόματη παραγωγή υπηρεσιών</a>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Προσωπικό</button>
         <div class="dropdown-content">
-            <a href="register">Προσθήκη προσωπικού</a>
-            <a href="users">Διαθέσιμο προσωπικό</a>
+            <a href="{{ url_for('register') }}">Προσθήκη προσωπικού</a>
+            <a href="{{ url_for('users') }}">Διαθέσιμο προσωπικό</a>
         </div>
     </div>
-    <span style="float:right;"><a href="logout">Αποσυνδεθείτε</a></span>
+    <span style="float:right;"><a href="{{ url_for('logout') }}">Αποσυνδεθείτε</a></span>
     {% else %}
-    <span style="float:right;"><a href="login">Συνδεθείτε</a></span>
+    <span style="float:right;"><a href="{{ url_for('login') }}">Συνδεθείτε</a></span>
     {% endif %}
 </div>
