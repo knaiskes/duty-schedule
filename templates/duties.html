@@ -42,6 +42,7 @@
 <div id = "duty-table">
     <table>
         <tr>
+            <th>Βαθμός</th>
             <th>Όνομα</th>
             <th>Επίθετο</th>
             <th>Ημερομηνία</th>
@@ -53,6 +54,7 @@
         </tr>
         {% for duty in duties_list %}
         <tr>
+            <td>{{ duty.rank      }}</td>
             <td>{{ duty.name      }}</td>
             <td>{{ duty.lastname  }}</td>
             <td>{{ duty.duty_date.strftime("%d-%m-%Y") }}</td>
