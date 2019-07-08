@@ -140,7 +140,7 @@ def generate_duties():
         users_list_gen.append(form.lastname.data)
     if request.method == "POST" and form.clear.data:
         users_list_gen.clear()
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.submit.data and form.validate():
         days = form.days.data
         duty_type = form.duty_type.data
         users_generate = generateDuties(users_list_gen)
