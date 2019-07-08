@@ -141,16 +141,16 @@ def generate_duties():
     if request.method == "POST" and form.clear.data:
         users_list_gen.clear()
     if request.method == "POST" and form.submit.data and form.validate():
-        days = form.days.data
+        date_options = form.date_options.data
         duty_type = form.duty_type.data
-        users_generate = generateDuties(users_list_gen)
+        users_generate = generateDuties(users_list_gen, date_options)
         for i in users_generate:
             rank = i[0].rank
             name = i[0].name
             lastname = i[0].lastname
-            date = i[1]
-            print(rank, name, lastname, date, duty_type)
-            add_new_duty = Duty(name, lastname, date, duty_type, rank)
+            date_options = i[1]
+            print(rank, name, lastname, date_options, duty_type)
+            add_new_duty = Duty(name, lastname, date_options, duty_type, rank)
             db.session.add(add_new_duty)
             db.session.commit()
         return redirect(url_for("duties"))
