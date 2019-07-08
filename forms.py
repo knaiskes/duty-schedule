@@ -80,5 +80,6 @@ class GenerateDutieForm(FlaskForm):
     clear = SubmitField("Καθαρισμός λίστας")
     duty_type = SelectField("Τύπος υπηρεσίας",
             choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
-    days = IntegerField("Ημέρες")
+    date_options = SelectField("Επιλογές", choices=[("week","Εβδομάδα"),
+        ("month", "Μήνας")])
     submit = SubmitField("Αυτόματη παραγωγή")
