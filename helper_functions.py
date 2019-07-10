@@ -8,7 +8,6 @@ def encrypt_password(encrypt):
 
 def current_month_days():
     import calendar
-    import calendar
     import datetime
 
     today = datetime.date.today()
