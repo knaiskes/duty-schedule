@@ -197,3 +197,16 @@ a { text-decoration: none; }
     width: 300px;
     font-size: 18px;
 }
+
+#generate_duties_users_table table{
+    position: absolute;
+    top: 25%;
+    right: 10%;
+}
+
+#generate_duties_users_table td, th {
+    border: 2px solid #dddddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 18px;
+}
