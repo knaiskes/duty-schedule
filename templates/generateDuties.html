@@ -7,9 +7,18 @@ body { text-align: center; }
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
 <h3>Αυτόματη παραγωγή υπηρεσιών ΣΤΡ</h3>
-{% for user in users %}
-<p>{{user.name}} " "{{user.lastname}}</p>
-{%endfor%}
+<div id="generate_duties_users_table">
+    <table>
+        <tr>
+            <th>Λίστα ΣΤΡ</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.name}} {{user.lastname}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 <div id="append-form">
     <form method="POST">
         {{ form.hidden_tag() }}
