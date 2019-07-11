@@ -17,6 +17,18 @@ def current_month_days():
 
     return month_days.days
 
+def start_end_of_week():
+    import datetime
+    import calendar
+
+    today = datetime.date.today()
+    start_of_week = today - datetime.timedelta(days=today.weekday())
+    end_of_week = start_of_week + datetime.timedelta(days=6)
+
+    week_days = end_of_week - today
+
+    return week_days.days
+
 def calculateDateQuery(option):
     from datetime import timedelta
     from  datetime import date
@@ -24,7 +36,7 @@ def calculateDateQuery(option):
     available_options = {
             "today": date.today(),
             "tomorrow": date.today() + timedelta(days=1),
-            "week": date.today() + timedelta(days=7),
+            "week": date.today() + timedelta(days=start_end_of_week()),
             "month": date.today() + timedelta(days=current_month_days()),
     }
     return available_options[option]
