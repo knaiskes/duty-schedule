@@ -8,13 +8,26 @@ def encrypt_password(encrypt):
 
 def current_month_days():
     import calendar
-    from datetime import date
+    import datetime
 
-    today = date.today()
-    current_month = today.month
-    current_year = today.year
-    month_days = calendar.monthrange(current_year, current_month)[1]
-    return month_days
+    today = datetime.date.today()
+    end_of_month = datetime.date(today.year, today.month, calendar.monthrange(today.year, today.month)[1])
+
+    month_days = end_of_month - today
+
+    return month_days.days
+
+def start_end_of_week():
+    import datetime
+    import calendar
+
+    today = datetime.date.today()
+    start_of_week = today - datetime.timedelta(days=today.weekday())
+    end_of_week = start_of_week + datetime.timedelta(days=6)
+
+    week_days = end_of_week - today
+
+    return week_days.days
 
 def calculateDateQuery(option):
     from datetime import timedelta
@@ -23,7 +36,7 @@ def calculateDateQuery(option):
     available_options = {
             "today": date.today(),
             "tomorrow": date.today() + timedelta(days=1),
-            "week": date.today() + timedelta(days=7),
+            "week": date.today() + timedelta(days=start_end_of_week()),
             "month": date.today() + timedelta(days=current_month_days()),
     }
     return available_options[option]
