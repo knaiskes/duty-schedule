@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -131,6 +131,18 @@ def add_duty_form():
         flash("Η υπηρεσία προστέθηκε")
 
     return render_template("addDuty.html", form=form)
+
+@app.route("/add_duty_type", methods=["GET", "POST"])
+@login_required
+def add_duty_type():
+    form = AddNewDutyType(request.form)
+    if request.method == "POST" and form.validate():
+        add_new_duty_type = Duty_types(form.name.data)
+        db.session.add(add_new_duty_type)
+        db.session.commit()
+        flash("Ο νέος τύπος υπηρεσίας καταχωρήθηκε")
+
+    return render_template("addDutyType.html", form=form)
 
 @app.route("/generate_duties", methods=["GET","POST"])
 @login_required

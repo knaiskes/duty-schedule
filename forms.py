@@ -87,3 +87,9 @@ class GenerateDutieForm(FlaskForm):
     date_options = SelectField("Επιλογές", choices=[("week","Εβδομάδα"),
         ("month", "Μήνας")])
     submit = SubmitField("Αυτόματη παραγωγή")
+
+class AddNewDutyType(FlaskForm):
+    name = StringField("Ονομασία υπηρεσίας",
+            validators=[DataRequired()],
+            render_kw={"placeholder": "Ονομασία υπηρεσίας"})
+    submit = SubmitField("Προσθήκη")
