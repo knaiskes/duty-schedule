@@ -47,3 +47,10 @@ class Duty(db.Model):
         self.duty_date = duty_date
         self.duty_type = duty_type
         self.rank = rank
+
+class Duty_types(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(30))
+
+    def __init__(self, name):
+        self.name = name

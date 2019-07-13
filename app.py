@@ -124,7 +124,7 @@ def add_duty_form():
         duty_type = form.duty_type.data
         duty_date = form.duty_date.data
 
-        add_new_duty = Duty(duty_user.name, duty_user.lastname, duty_date, duty_type, duty_user.rank)
+        add_new_duty = Duty(duty_user.name, duty_user.lastname, duty_date, duty_type.name, duty_user.rank)
         db.session.add(add_new_duty)
         db.session.commit()
 
@@ -150,7 +150,7 @@ def generate_duties():
             lastname = i[0].lastname
             date_options = i[1]
             print(rank, name, lastname, date_options, duty_type)
-            add_new_duty = Duty(name, lastname, date_options, duty_type, rank)
+            add_new_duty = Duty(name, lastname, date_options, duty_type.name, rank)
             db.session.add(add_new_duty)
             db.session.commit()
         return redirect(url_for("duties"))
