@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields.html5 import DateField
 from models import User
+from models import Duty_types
 
 class RegistrationForm(FlaskForm):
     name = StringField("Όνομα",
@@ -45,12 +46,15 @@ def user_query():
     #return User.query.distinct(User.lastname).group_by(User.lastname).all()
     return User.query.all()
 
+def duty_query():
+    return Duty_types.query.all()
+
 class AddDutyForm(FlaskForm):
     lastname = QuerySelectField("Ονοματεπώνυμο",
             query_factory = user_query, get_label=lambda user:
             user.lastname + " " + user.name)
-    duty_type = SelectField("Τύπος υπηρεσίας",
-            choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
+    duty_type = QuerySelectField("Τύπος υπηρεσίας", query_factory = duty_query,
+            get_label=lambda duty: duty.name)
     duty_date = DateField("Ημερομηνία", format="%Y-%m-%d")
     submit = SubmitField("Προσθήκη")
 
@@ -78,8 +82,14 @@ class GenerateDutieForm(FlaskForm):
             user.lastname + " " + user.name)
     add = SubmitField("Προσθήκη στη λίστα")
     clear = SubmitField("Καθαρισμός λίστας")
-    duty_type = SelectField("Τύπος υπηρεσίας",
-            choices = [("ΚΕΕΗΠ","ΚEΕΗΠ"), ("ΦΥΛΑΚΙΟ", "ΦΥΛΑΚΙΟ")])
+    duty_type = QuerySelectField("Τύπος υπηρεσίας", query_factory = duty_query,
+            get_label=lambda duty: duty.name)
     date_options = SelectField("Επιλογές", choices=[("week","Εβδομάδα"),
         ("month", "Μήνας")])
     submit = SubmitField("Αυτόματη παραγωγή")
+
+class AddNewDutyType(FlaskForm):
+    name = StringField("Ονομασία υπηρεσίας",
+            validators=[DataRequired()],
+            render_kw={"placeholder": "Ονομασία υπηρεσίας"})
+    submit = SubmitField("Προσθήκη")

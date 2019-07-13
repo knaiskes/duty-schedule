@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -124,13 +124,25 @@ def add_duty_form():
         duty_type = form.duty_type.data
         duty_date = form.duty_date.data
 
-        add_new_duty = Duty(duty_user.name, duty_user.lastname, duty_date, duty_type, duty_user.rank)
+        add_new_duty = Duty(duty_user.name, duty_user.lastname, duty_date, duty_type.name, duty_user.rank)
         db.session.add(add_new_duty)
         db.session.commit()
 
         flash("Η υπηρεσία προστέθηκε")
 
     return render_template("addDuty.html", form=form)
+
+@app.route("/add_duty_type", methods=["GET", "POST"])
+@login_required
+def add_duty_type():
+    form = AddNewDutyType(request.form)
+    if request.method == "POST" and form.validate():
+        add_new_duty_type = Duty_types(form.name.data)
+        db.session.add(add_new_duty_type)
+        db.session.commit()
+        flash("Ο νέος τύπος υπηρεσίας καταχωρήθηκε")
+
+    return render_template("addDutyType.html", form=form)
 
 @app.route("/generate_duties", methods=["GET","POST"])
 @login_required
@@ -150,7 +162,7 @@ def generate_duties():
             lastname = i[0].lastname
             date_options = i[1]
             print(rank, name, lastname, date_options, duty_type)
-            add_new_duty = Duty(name, lastname, date_options, duty_type, rank)
+            add_new_duty = Duty(name, lastname, date_options, duty_type.name, rank)
             db.session.add(add_new_duty)
             db.session.commit()
         return redirect(url_for("duties"))

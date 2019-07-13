@@ -1,0 +1,26 @@
+<title>Προσθήκη νέου τύπου υπηρεσίας</title>
+<style>
+body { text-align: center; }
+</style>
+{% extends "base.html" %}
+
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<h3>Προσθήκη νέου τύπου υπηρεσίας</h3>
+<div id="append-form">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <dl>
+            {{ render_field(form.name)   }}
+            {{ render_field(form.submit) }}
+        </dl>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h4> {{message}} </h4>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </form>
+</div>
+{% endblock %}
