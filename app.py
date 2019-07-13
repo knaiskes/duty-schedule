@@ -274,5 +274,22 @@ def deleteUser(id):
         db.session.commit()
     return redirect(url_for("users"))
 
+@app.route("/duties_type_list", methods=["GET", "POST"])
+@login_required
+def duties_type_list():
+    if request.method == "GET":
+        duties_type_list = Duty_types.query.all()
+    return render_template("duties_type_list.html", duties_type_list=duties_type_list)
+
+@app.route("/delete_duty_type/<int:id>")
+@login_required
+def delete_duty_type(id):
+    duty_type = Duty_types.query.get_or_404(id)
+
+    if duty_type:
+        db.session.delete(duty_type)
+        db.session.commit()
+    return redirect(url_for("duties_type_list"))
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
