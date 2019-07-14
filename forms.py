@@ -93,3 +93,7 @@ class AddNewDutyType(FlaskForm):
             validators=[DataRequired()],
             render_kw={"placeholder": "Ονομασία υπηρεσίας"})
     submit = SubmitField("Προσθήκη")
+
+class EditDutyType(FlaskForm):
+    name = StringField("Όνομα",validators=[DataRequired()])
+    submit = SubmitField("Αποθήκευση αλλαγών")
