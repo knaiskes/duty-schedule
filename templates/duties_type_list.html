@@ -14,7 +14,7 @@
         {% for duty_type in duties_type_list %}
         <tr>
             <td>{{ duty_type.name      }}</td>
-            <td><a href="#/{{duty_type.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
+            <td><a href="edit_duty_type/{{duty_type.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
             <td><a href="delete_duty_type/{{duty_type.id}}"><span style="font-size:35px;color:red;">&#10006</span></a></td>
         </tr>
         {% endfor %}

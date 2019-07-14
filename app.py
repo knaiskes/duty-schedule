@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -290,6 +290,21 @@ def delete_duty_type(id):
         db.session.delete(duty_type)
         db.session.commit()
     return redirect(url_for("duties_type_list"))
+
+@app.route("/edit_duty_type/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_duty_type(id):
+    form = EditDutyType(request.form)
+    duty_type = Duty_types.query.get_or_404(id)
+
+    if request.method == "GET":
+        form.name.data = duty_type.name
+
+    if request.method == "POST" and form.validate():
+        duty_type.name = form.name.data
+        db.session.commit()
+        return redirect(url_for("duties_type_list"))
+    return render_template("edit_duty_type.html", form=form)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
