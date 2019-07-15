@@ -1,0 +1,29 @@
+<title>Άδειες</title>
+{% extends "base.html" %}
+
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+<center><h3>Άδειες</h3></center>
+<div id = "duty-table">
+    <table>
+        <tr>
+            <th>Βαθμός</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Τύπος</th>
+            <th>Επεξεργασία</th>
+            <th>Διαγραφή</th>
+        </tr>
+        {% for absent in absent_list %}
+        <tr>
+            <td>{{ absent.rank      }}</td>
+            <td>{{ absent.name      }}</td>
+            <td>{{ absent.lastname  }}</td>
+            <td>{{ absent.absent_type }}</td>
+            <td><a href="editAbsent/{{absent.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
+            <td><a href="deleteAbsent/{{absent.id}}"><span style="font-size:35px;color:red;">&#10006</span></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

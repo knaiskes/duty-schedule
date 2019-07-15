@@ -54,3 +54,29 @@ class Duty_types(db.Model):
 
     def __init__(self, name):
         self.name = name
+
+class Absent_types(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(30))
+
+    def __init__(self, name):
+        self.name = name
+
+class Absent(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    absent_type = db.Column(db.String((30)))
+    #start = db.Column(db.Date)
+    #end = db.Column(db.Date)
+    days = db.Column(db.Integer)
+    name = db.Column(db.String(30))
+    lastname = db.Column(db.String(30))
+    rank =  db.Column(db.String(15))
+
+    def __init__(self, absent_type, days, name, lastname, rank):
+        self.absent_type = absent_type
+        #self.start = start
+        #self.end = end
+        self.days = days
+        self.name = name
+        self.lastname = lastname
+        self.rank = rank

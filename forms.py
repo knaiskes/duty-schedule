@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields.html5 import DateField
 from models import User
-from models import Duty_types
+from models import Duty_types, Absent_types
 
 class RegistrationForm(FlaskForm):
     name = StringField("Όνομα",
@@ -97,3 +97,29 @@ class AddNewDutyType(FlaskForm):
 class EditDutyType(FlaskForm):
     name = StringField("Όνομα",validators=[DataRequired()])
     submit = SubmitField("Αποθήκευση αλλαγών")
+
+class AddAbsentTypeForm(FlaskForm):
+    name = StringField("Ονομασία άδειας", validators=[DataRequired()],
+            render_kw={"placeholder": "Ονομασία άδειας"})
+    submit = SubmitField("Προσθήκη")
+
+def absent_types_query():
+    return Absent_types.query.all()
+
+class AddAbsentForm(FlaskForm):
+    lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query,
+            get_label=lambda user: user.lastname + " " + user.name)
+    absent_type = QuerySelectField("Τύπος άδειας",
+            query_factory = absent_types_query,
+            get_label=lambda absent_type: absent_type.name)
+    days = IntegerField()
+    submit = SubmitField("Καταχώρηση άδειας")
+
+class EditAbsentForm(FlaskForm):
+    lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query,
+            get_label=lambda user: user.lastname + " " + user.name)
+    absent_type = QuerySelectField("Τύπος άδειας",
+            query_factory = absent_types_query,
+            get_label=lambda absent_type: absent_type.name)
+    days = IntegerField()
+    submit = SubmitField("Καταχώρηση άδειας")
