@@ -72,8 +72,8 @@ class Absent(db.Model):
     lastname = db.Column(db.String(30))
     rank =  db.Column(db.String(15))
 
-    def __init__(self, absent_name, days, name, lastname, rank):
-        self.absent_name = absent_name
+    def __init__(self, absent_type, days, name, lastname, rank):
+        self.absent_type = absent_type
         #self.start = start
         #self.end = end
         self.days = days
