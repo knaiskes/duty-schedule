@@ -64,7 +64,7 @@ class Absent_types(db.Model):
 
 class Absent(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    absent_name = db.Column(db.String((30)))
+    absent_type = db.Column(db.String((30)))
     #start = db.Column(db.Date)
     #end = db.Column(db.Date)
     days = db.Column(db.Integer)

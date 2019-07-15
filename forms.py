@@ -109,7 +109,7 @@ def absent_types_query():
 class AddAbsentForm(FlaskForm):
     lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query,
             get_label=lambda user: user.lastname + " " + user.name)
-    absent_name = QuerySelectField("Τύπος άδειας",
+    absent_type = QuerySelectField("Τύπος άδειας",
             query_factory = absent_types_query,
             get_label=lambda absent_type: absent_type.name)
     days = IntegerField()
