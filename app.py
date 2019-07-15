@@ -310,8 +310,8 @@ def edit_duty_type(id):
 @login_required
 def absent_list():
     if request.method == "GET":
-        absent_types_list = Absent.query.all()
-    return render_template("absent_list.html", absent_types_list=absent_types_list)
+        absent_list = Absent.query.all()
+    return render_template("absent_list.html", absent_list=absent_list)
 
 @app.route("/add_absent", methods=["GET", "POST"])
 @login_required
