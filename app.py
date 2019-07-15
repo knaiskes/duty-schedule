@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm, EditAbsentForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -329,6 +329,28 @@ def add_absent():
         db.session.commit()
         flash("Η άδεια καταχωρήθηκε")
     return render_template("add_absent.html", form=form)
+
+@app.route("/editAbsent/<int:id>", methods=["GET", "POST"])
+@login_required
+def editAbsent(id):
+    form = EditAbsentForm(request.form)
+    absent = Absent.query.get_or_404(id)
+
+    if request.method == "GET":
+        form.days.data = absent.days
+
+    if request.method == "POST" and form.validate():
+        absent.lastname = form.lastname.data.lastname
+        absent.name = form.lastname.data.name
+        absent.absent_type = form.absent_type.data.name
+        absent.rank = form.lastname.data.rank
+        absent.days = form.days.data
+
+        db.session.commit()
+        return redirect(url_for("absent_list"))
+
+    return render_template("editAbsent.html", form=form)
+
 
 @app.route("/deleteAbsent/<int:id>", methods=["GET", "POST"])
 @login_required

@@ -114,3 +114,12 @@ class AddAbsentForm(FlaskForm):
             get_label=lambda absent_type: absent_type.name)
     days = IntegerField()
     submit = SubmitField("Καταχώρηση άδειας")
+
+class EditAbsentForm(FlaskForm):
+    lastname = QuerySelectField("Ονοματεπώνυμο", query_factory = user_query,
+            get_label=lambda user: user.lastname + " " + user.name)
+    absent_type = QuerySelectField("Τύπος άδειας",
+            query_factory = absent_types_query,
+            get_label=lambda absent_type: absent_type.name)
+    days = IntegerField()
+    submit = SubmitField("Καταχώρηση άδειας")
