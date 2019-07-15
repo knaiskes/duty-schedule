@@ -330,6 +330,15 @@ def add_absent():
         flash("Η άδεια καταχωρήθηκε")
     return render_template("add_absent.html", form=form)
 
+@app.route("/deleteAbsent/<int:id>", methods=["GET", "POST"])
+@login_required
+def deleteAbsent(id):
+    absent = Absent.query.get_or_404(id)
+    if absent:
+        db.session.delete(absent)
+        db.session.commit()
+    return redirect(url_for("absent_list"))
+
 @app.route("/add_absent_type", methods=["GET", "POST"])
 @login_required
 def add_absent_type():
