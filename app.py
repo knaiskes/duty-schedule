@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -305,6 +305,40 @@ def edit_duty_type(id):
         db.session.commit()
         return redirect(url_for("duties_type_list"))
     return render_template("edit_duty_type.html", form=form)
+
+@app.route("/absent_list", methods=["GET", "POST"])
+@login_required
+def absent_list():
+    if request.method == "GET":
+        absent_types_list = Absent.query.all()
+    return render_template("absent_list.html", absent_types_list=absent_types_list)
+
+@app.route("/add_absent", methods=["GET", "POST"])
+@login_required
+def add_absent():
+    form = AddAbsentForm(request.form)
+    if request.method == "POST" and form.validate():
+        absent_user_name = form.lastname.data
+        absent_name = form.absent_name.data
+        absent_days = form.days.data
+
+        add_new_absent = Absent(absent_name.name, absent_days, absent_user_name.name, absent_user_name.lastname, absent_user_name.rank)
+        db.session.add(add_new_absent)
+        db.session.commit()
+        flash("Η άδεια καταχωρήθηκε")
+    return render_template("add_absent.html", form=form)
+
+@app.route("/add_absent_type", methods=["GET", "POST"])
+@login_required
+def add_absent_type():
+    form = AddAbsentTypeForm(request.form)
+    if request.method == "POST" and form.validate():
+        add_new_absent_type = Absent_types(form.name.data)
+        db.session.add(add_new_absent_type)
+        db.session.commit()
+        flash("Ο νέος τύπος άδειας καταχωρήθηκε")
+
+    return render_template("add_absent_type.html", form=form)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

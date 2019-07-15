@@ -1,0 +1,22 @@
+<title>Διαθέσιμο προσωπικό</title>
+{% extends "base.html" %}
+
+{% block content %}
+<center><h3>Διαθέσιμο προσωπικό</h3></center>
+<div id = "duty-table">
+    <table>
+        <tr>
+            <th>Βαθμός</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Επεξεργασία</th>
+            <th>Διαγραφή</th>
+        </tr>
+        {% for absent in absent_types_list %}
+        <tr>
+            <td>{{ absent.name      }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
