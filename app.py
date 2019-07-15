@@ -220,9 +220,10 @@ def editDuty(id):
 
     if request.method == "POST" and form.validate():
         duty.lastname = form.lastname.data.lastname
-        duty.duty_type = form.duty_type.data
+        duty.duty_type = form.duty_type.data.name
         duty.duty_date = form.duty_date.data
         duty.name = form.lastname.data.name
+        duty.rank = form.lastname.data.rank
 
         db.session.commit()
         return redirect(url_for("duties"))
