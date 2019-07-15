@@ -9,12 +9,16 @@
             <th>Βαθμός</th>
             <th>Όνομα</th>
             <th>Επίθετο</th>
+            <th>Τύπος</th>
             <th>Επεξεργασία</th>
             <th>Διαγραφή</th>
         </tr>
         {% for absent in absent_types_list %}
         <tr>
+            <td>{{ absent.rank      }}</td>
             <td>{{ absent.name      }}</td>
+            <td>{{ absent.lastname  }}</td>
+            <td>{{ absent.absent_type }}</td>
         </tr>
         {% endfor %}
     </table>
