@@ -374,5 +374,12 @@ def add_absent_type():
 
     return render_template("add_absent_type.html", form=form)
 
+@app.route("/absent_types_list", methods=["GET", "POST"])
+@login_required
+def absent_types_list():
+    if request.method == "GET":
+        absent_types_list = Absent_types.query.all()
+    return render_template("absent_types_list.html", absent_types_list=absent_types_list)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
