@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm, EditAbsentForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm, EditAbsentForm, EditAbsentTypeForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -352,7 +352,6 @@ def editAbsent(id):
 
     return render_template("editAbsent.html", form=form)
 
-
 @app.route("/deleteAbsent/<int:id>", methods=["GET", "POST"])
 @login_required
 def deleteAbsent(id):
@@ -373,6 +372,39 @@ def add_absent_type():
         flash("Ο νέος τύπος άδειας καταχωρήθηκε")
 
     return render_template("add_absent_type.html", form=form)
+
+@app.route("/absent_types_list", methods=["GET", "POST"])
+@login_required
+def absent_types_list():
+    if request.method == "GET":
+        absent_types_list = Absent_types.query.all()
+    return render_template("absent_types_list.html", absent_types_list=absent_types_list)
+
+@app.route("/editAbsentType/<int:id>", methods=["GET", "POST"])
+@login_required
+def editAbsentType(id):
+    form = EditAbsentTypeForm(request.form)
+    absent = Absent_types.query.get_or_404(id)
+
+    if request.method == "GET":
+        form.name.data = absent.name
+
+    if request.method == "POST" and form.validate():
+        absent.name = form.name.data
+
+        db.session.commit()
+        return redirect(url_for("absent_types_list"))
+
+    return render_template("editAbsentType.html", form=form)
+
+@app.route("/deleteAbsentType/<int:id>", methods=["GET", "POST"])
+@login_required
+def deleteAbsentType(id):
+    absent = Absent_types.query.get_or_404(id)
+    if absent:
+        db.session.delete(absent)
+        db.session.commit()
+    return redirect(url_for("absent_types_list"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
