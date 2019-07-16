@@ -381,5 +381,14 @@ def absent_types_list():
         absent_types_list = Absent_types.query.all()
     return render_template("absent_types_list.html", absent_types_list=absent_types_list)
 
+@app.route("/deleteAbsentType/<int:id>", methods=["GET", "POST"])
+@login_required
+def deleteAbsentType(id):
+    absent = Absent_types.query.get_or_404(id)
+    if absent:
+        db.session.delete(absent)
+        db.session.commit()
+    return redirect(url_for("absent_types_list"))
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
