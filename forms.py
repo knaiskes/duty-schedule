@@ -123,3 +123,8 @@ class EditAbsentForm(FlaskForm):
             get_label=lambda absent_type: absent_type.name)
     days = IntegerField()
     submit = SubmitField("Καταχώρηση άδειας")
+
+class EditAbsentTypeForm(FlaskForm):
+    name = StringField("Ονομασία άδειας", validators=[DataRequired()],
+            render_kw={"placeholder": "Ονομασία άδειας"})
+    submit = SubmitField("Αποθήκευση αλλαγών")
