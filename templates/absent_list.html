@@ -11,6 +11,9 @@
             <th>Όνομα</th>
             <th>Επίθετο</th>
             <th>Τύπος</th>
+            <th>Ημέρες</th>
+            <th>Αρχή</th>
+            <th>Τέλος</th>
             <th>Επεξεργασία</th>
             <th>Διαγραφή</th>
         </tr>
@@ -20,6 +23,9 @@
             <td>{{ absent.name      }}</td>
             <td>{{ absent.lastname  }}</td>
             <td>{{ absent.absent_type }}</td>
+            <td>{{ absent.days }}</td>
+            <td>{{ absent.start }}</td>
+            <td>{{ absent.end }}</td>
             <td><a href="editAbsent/{{absent.id}}"><span style="font-size:35px;color:green;">&#9999</span></a></td>
             <td><a href="deleteAbsent/{{absent.id}}"><span style="font-size:35px;color:red;">&#10006</span></a></td>
         </tr>

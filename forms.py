@@ -112,6 +112,8 @@ class AddAbsentForm(FlaskForm):
     absent_type = QuerySelectField("Τύπος άδειας",
             query_factory = absent_types_query,
             get_label=lambda absent_type: absent_type.name)
+    start = DateField("Ημερομηνία: Αρχή άδειας", format="%Y-%m-%d")
+    end = DateField("Ημερομηνία: Τέλος άδειας", format="%Y-%m-%d")
     days = IntegerField()
     submit = SubmitField("Καταχώρηση άδειας")
 

@@ -322,10 +322,12 @@ def add_absent():
         absent_user_name = form.lastname.data
         absent_type = form.absent_type.data
         absent_days = form.days.data
+        absent_start = form.start.data
+        absent_end = form.end.data
 
         add_new_absent = Absent(absent_type.name, absent_days,
                 absent_user_name.name, absent_user_name.lastname,
-                absent_user_name.rank)
+                absent_user_name.rank, absent_start, absent_end)
         db.session.add(add_new_absent)
         db.session.commit()
         flash("Η άδεια καταχωρήθηκε")
