@@ -412,5 +412,23 @@ def deleteAbsentType(id):
         db.session.commit()
     return redirect(url_for("absent_types_list"))
 
+@app.route("/month_table", methods=["GET", "POST"])
+@login_required
+def month_table():
+    #result = db.session.query(Duty.name).join(User, User.name == Duty.name)
+    #result = db.session.query(Duty).join(Absent)
+    import calendar
+    today = date.today()
+    current_month =  today.month
+    current_year = today.year
+    month_days = calendar.monthrange(current_year, current_month)[1]
+    start = date(current_year, current_month, 1)
+    end = date(current_year, current_month, month_days)
+
+    duties_list = Duty.query.order_by(desc(Duty.duty_date)).filter(Duty.duty_date.between(start, end)).all()
+    absent_list = Absent.query.order_by(desc(Absent.start)).filter(Absent.start.between(start, end)).all()
+
+    return render_template("month_table.html", duties_list=duties_list, absent_list=absent_list)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
