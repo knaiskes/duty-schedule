@@ -322,10 +322,12 @@ def add_absent():
         absent_user_name = form.lastname.data
         absent_type = form.absent_type.data
         absent_days = form.days.data
+        absent_start = form.start.data
+        absent_end = form.end.data
 
         add_new_absent = Absent(absent_type.name, absent_days,
                 absent_user_name.name, absent_user_name.lastname,
-                absent_user_name.rank)
+                absent_user_name.rank, absent_start, absent_end)
         db.session.add(add_new_absent)
         db.session.commit()
         flash("Η άδεια καταχωρήθηκε")
@@ -338,6 +340,8 @@ def editAbsent(id):
     absent = Absent.query.get_or_404(id)
 
     if request.method == "GET":
+        form.start.data = string_to_datetime(absent.start.strftime("%Y-%m-%d"))
+        form.end.data = string_to_datetime(absent.end.strftime("%Y-%m-%d"))
         form.days.data = absent.days
 
     if request.method == "POST" and form.validate():
@@ -346,6 +350,8 @@ def editAbsent(id):
         absent.absent_type = form.absent_type.data.name
         absent.rank = form.lastname.data.rank
         absent.days = form.days.data
+        absent.start = form.start.data
+        absent.end = form.end.data
 
         db.session.commit()
         return redirect(url_for("absent_list"))
