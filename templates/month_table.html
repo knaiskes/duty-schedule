@@ -1,0 +1,53 @@
+<title>Συγκεντρωτική λίστα για τον μήνα</title>
+{% extends "base.html" %}
+
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+
+<center><h3>Οι υπηρεσίες για το μήνα</h3></center>
+<div id = "duty-table">
+    <table>
+        <tr>
+            <th>Βαθμός</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Ημερομηνία</th>
+            <th>Υπηρεσία</th>
+        </tr>
+        {% for duty in duties_list %}
+        <tr>
+            <td>{{ duty.rank                           }}</td>
+            <td>{{ duty.name                           }}</td>
+            <td>{{ duty.lastname                       }}</td>
+            <td>{{ duty.duty_date.strftime("%d-%m-%Y") }}</td>
+            <td>{{ duty.duty_type                      }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+<center><h3>Οι Άδειες για τον μήνα</h3></center>
+<div id = "duty-table">
+    <table>
+        <tr>
+            <th>Βαθμός</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Τύπος</th>
+            <th>Ημέρες</th>
+            <th>Αρχή</th>
+            <th>Τέλος</th>
+        </tr>
+        {% for absent in absent_list %}
+        <tr>
+            <td>{{ absent.rank        }}</td>
+            <td>{{ absent.name        }}</td>
+            <td>{{ absent.lastname    }}</td>
+            <td>{{ absent.absent_type }}</td>
+            <td>{{ absent.days        }}</td>
+            <td>{{ absent.start       }}</td>
+            <td>{{ absent.end         }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
