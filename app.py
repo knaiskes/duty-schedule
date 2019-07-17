@@ -340,6 +340,8 @@ def editAbsent(id):
     absent = Absent.query.get_or_404(id)
 
     if request.method == "GET":
+        form.start.data = string_to_datetime(absent.start.strftime("%Y-%m-%d"))
+        form.end.data = string_to_datetime(absent.end.strftime("%Y-%m-%d"))
         form.days.data = absent.days
 
     if request.method == "POST" and form.validate():
@@ -348,6 +350,8 @@ def editAbsent(id):
         absent.absent_type = form.absent_type.data.name
         absent.rank = form.lastname.data.rank
         absent.days = form.days.data
+        absent.start = form.start.data
+        absent.end = form.end.data
 
         db.session.commit()
         return redirect(url_for("absent_list"))
