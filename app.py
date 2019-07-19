@@ -161,7 +161,6 @@ def generate_duties():
             name = i[0].name
             lastname = i[0].lastname
             date_options = i[1]
-            print(rank, name, lastname, date_options, duty_type)
             add_new_duty = Duty(name, lastname, date_options, duty_type.name, rank)
             db.session.add(add_new_duty)
             db.session.commit()
