@@ -414,8 +414,6 @@ def deleteAbsentType(id):
 @app.route("/month_table", methods=["GET", "POST"])
 @login_required
 def month_table():
-    #result = db.session.query(Duty.name).join(User, User.name == Duty.name)
-    #result = db.session.query(Duty).join(Absent)
     import calendar
     today = date.today()
     current_month =  today.month
