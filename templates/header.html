@@ -1,5 +1,6 @@
 <div class="navbar">
     <a href="{{ url_for('duties') }}">Λίστα υπηρεσιών</a>
+    <a href="{{ url_for('month_table') }}">Λίστα υπηρεσιών/αδειών για το μήνα</a>
     {% if current_user.is_authenticated %}
     <div class="dropdown">
         <button class="dropbtn">Υπηρεσίες</button>
