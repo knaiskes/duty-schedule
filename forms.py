@@ -132,3 +132,9 @@ class EditAbsentTypeForm(FlaskForm):
     name = StringField("Ονομασία άδειας", validators=[DataRequired()],
             render_kw={"placeholder": "Ονομασία άδειας"})
     submit = SubmitField("Αποθήκευση αλλαγών")
+
+class UpdateAdminPasswordForm(FlaskForm):
+    password = PasswordField("Κωδικός", validators=[DataRequired()])
+    confirm = PasswordField("Επαλήθευση κωδικού",
+            validators=[DataRequired(), EqualTo("password")])
+    submit = SubmitField("submit")

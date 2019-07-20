@@ -5,7 +5,7 @@ import os.path
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm, EditAbsentForm, EditAbsentTypeForm
+from forms import RegistrationForm, AddDutyForm, LoginForm, EditDutyForm, EditUserForm, SearchDuty, DateOptions, GenerateDutieForm, AddNewDutyType, EditDutyType, AddAbsentTypeForm, AddAbsentForm, EditAbsentForm, EditAbsentTypeForm, UpdateAdminPasswordForm
 from models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from helper_functions import encrypt_password, generateDuties
@@ -429,6 +429,18 @@ def month_table():
     absent_list = Absent.query.order_by(desc(Absent.start)).filter(Absent.start.between(start, end)).all()
 
     return render_template("month_table.html", duties_list=duties_list, absent_list=absent_list)
+
+@app.route("/update_password", methods=["GET", "POST"])
+@login_required
+def update_password():
+    form = UpdateAdminPasswordForm(request.form)
+    admin = Admin.query.get_or_404(1) # id is 1 as there is only one admin
+
+    if request.method == "POST" and form.validate():
+        new_password = encrypt_password(form.password.data)
+        admin.password = new_password
+        db.session.commit()
+    return render_template("update_password.html", form=form)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
