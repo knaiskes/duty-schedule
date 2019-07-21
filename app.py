@@ -195,7 +195,7 @@ def login():
                 login_user(admin)
                 return redirect(url_for("duties"))
             else:
-                flash("Το όνομα χρήστη ή ο κωδικός που εισάγατε δεν αντιστοιχεί σε κανέναν λογαριασμό")
+                flash("Ο κωδικός είναι λάθος")
 
     return render_template("login.html", form=form)
 
