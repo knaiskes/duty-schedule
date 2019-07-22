@@ -114,7 +114,7 @@ class AddAbsentForm(FlaskForm):
             get_label=lambda absent_type: absent_type.name)
     start = DateField("Ημερομηνία: Αρχή άδειας", format="%Y-%m-%d")
     end = DateField("Ημερομηνία: Τέλος άδειας", format="%Y-%m-%d")
-    days = IntegerField()
+    days = IntegerField("Ημέρες")
     submit = SubmitField("Καταχώρηση άδειας")
 
 class EditAbsentForm(FlaskForm):
