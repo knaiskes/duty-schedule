@@ -20,6 +20,7 @@ This project was requested to be developed by a lieutenant while I was serving i
 $ git clone https://github.com/KNaiskes/duty-schedule
 $ cd duty-schedule
 $ python -m venv venv # Create a virtual enviroment
+$ source venv/bin/activate # Activate virtual enviroment
 $ pip install -r requirements.txt # Install project dependencies
 $ python app.py # Start project at http://localhost:5000/
 ```
