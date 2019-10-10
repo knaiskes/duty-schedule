@@ -24,5 +24,12 @@ $ source venv/bin/activate # Activate virtual enviroment
 $ pip install -r requirements.txt # Install project dependencies
 $ python app.py # Start project at http://localhost:5000/
 ```
-## License 
+#### Default login credentials
+
+```
+user: admin
+password: admin
+```
+
+## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
